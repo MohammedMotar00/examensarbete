@@ -7,7 +7,7 @@
 
       <v-spacer></v-spacer>
 
-      <div v-if="username">
+      <div v-if="username" style="display: flex">
         <p>{{ username }}</p>
         <v-btn @click="logout">
           Logout
@@ -32,9 +32,11 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("username");
-      this.login(null);
+      // this.login(null);
+      this.$store.dispatch("login", "");
+      this.usernameLoggedIn;
     },
-    ...mapActions(["login"]),
+    ...mapActions(["login", "usernameLoggedIn"]),
   },
 };
 </script>

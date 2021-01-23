@@ -3,6 +3,6 @@ export const login = ({ commit }, username) => {
 };
 
 export const usernameLoggedIn = ({ commit }) => {
-    let username = window.localStorage.getItem("username");
+    let username = localStorage.getItem("username");
     commit("SET_USERNAME_LOGGED_IN", username);
 };

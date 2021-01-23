@@ -8,9 +8,16 @@ import * as getters from "./getters";
 import * as mutations from "./mutations";
 import * as actions from "./actions";
 
+// Modules
+import champions from "./modules/champions";
+
 export default new Vuex.Store({
     state,
     getters,
     mutations: mutations,
-    actions: actions
+    actions: actions,
+
+    modules: {
+        champions
+    }
 });

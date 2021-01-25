@@ -5,7 +5,7 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Main from "../views/Main.vue";
 import ChampionPage from "../views/ChampionPage.vue";
-import AddItems from "../views/AddItems.vue";
+import AddItemsPage from "../views/AddItemsPage.vue";
 
 // Components
 
@@ -30,9 +30,9 @@ export default new VueRouter({
             component: ChampionPage
         },
         {
-            path: "/additems",
-            name: "AddItems",
-            component: AddItems
+            path: "/additems_page",
+            name: "AddItemsPage",
+            component: AddItemsPage
         }
     ]
 });

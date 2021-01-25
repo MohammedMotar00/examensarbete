@@ -10,6 +10,7 @@ import * as actions from "./actions";
 
 // Modules
 import champions from "./modules/champions";
+import items from "./modules/items";
 
 export default new Vuex.Store({
     state,
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     actions: actions,
 
     modules: {
-        champions
+        champions,
+        items
     }
 });

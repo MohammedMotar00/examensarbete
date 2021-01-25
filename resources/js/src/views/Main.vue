@@ -19,7 +19,7 @@
 
           <v-col class="justify-center mt-10 text-center" cols="12">
             <p>Adda items för champions</p>
-            <router-link to="/additems" style="text-decoration: none">
+            <router-link to="/additems_page" style="text-decoration: none">
               <v-icon class="add-icon" x-large>mdi-plus-circle</v-icon>
             </router-link>
           </v-col>

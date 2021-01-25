@@ -17,13 +17,23 @@ export default {
 
   mounted() {
     this.usernameLoggedIn();
+    this.fetchChampions();
   },
 
   methods: {
     ...mapActions(["usernameLoggedIn"]),
+    ...mapActions("champions", ["fetchChampions"]),
   },
 };
 </script>
 
 <style lang="scss">
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: 0.7;
+  position: absolute;
+  width: 100%;
+}
 </style>

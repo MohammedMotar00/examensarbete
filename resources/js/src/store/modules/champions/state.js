@@ -1,5 +1,4 @@
 export default {
-    shen: [],
-    yasuo: [],
-    yone: []
+    champions: [],
+    shen: {}
 };

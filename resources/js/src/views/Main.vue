@@ -48,12 +48,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-icon {
-  color: blue !important;
-  cursor: pointer;
-  transition: all 1s ease-in-out;
-  &:hover {
-    transform: scale(1.2, 1.2);
-  }
-}
+// .add-icon {
+//   color: blue !important;
+//   cursor: pointer;
+//   transition: all 1s ease-in-out;
+//   &:hover {
+//     transform: scale(1.2, 1.2);
+//   }
+// }
 </style>

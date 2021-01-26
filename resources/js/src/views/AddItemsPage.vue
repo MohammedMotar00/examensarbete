@@ -13,8 +13,25 @@
           <ChampionForItems
             :name="champ.name"
             :image="`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ.name}_${champ.skins[0].num}.jpg`"
-            :pickedChampion="getPickedChampionName"
+            :pickedChampion="pickedChampionName"
           />
+        </v-col>
+      </v-row>
+
+      <v-divider></v-divider>
+
+      <v-row>
+        <v-col cols="12">
+          <AddItem
+            title="Starting Items"
+            :pickedChampion="pickedChampionName"
+          />
+        </v-col>
+        <v-col cols="12">
+          <AddItem title="Middle Items" :pickedChampion="pickedChampionName" />
+        </v-col>
+        <v-col cols="12">
+          <AddItem title="Full Items" :pickedChampion="pickedChampionName" />
         </v-col>
       </v-row>
     </v-card>
@@ -22,20 +39,18 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import ChampionForItems from "../components/ChampionForItems";
+import AddItem from "../components/AddItem";
+// import AddItems from "../components/AddItems";
 
 export default {
   name: "AddItems",
-  components: { ChampionForItems },
-
-  mounted() {
-    console.log(this.getPickedChampionName);
-  },
+  components: { ChampionForItems, AddItem },
 
   computed: {
     ...mapState("champions", ["champions"]),
-    ...mapGetters("items", ["getPickedChampionName"]),
+    ...mapState("items", ["pickedChampionName"]),
   },
 };
 </script>

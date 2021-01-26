@@ -7,7 +7,11 @@
         style="cursor: pointer"
         @click="pickChampion(name)"
       >
-        <v-img :src="image" :style="{ border: border, backgroundColor: 'red' }">
+        <v-img
+          :src="image"
+          :style="name === pickedChampion && border"
+          style="background-color: black"
+        >
           <v-expand-transition>
             <div
               v-if="hover"
@@ -20,7 +24,6 @@
         </v-img>
       </v-card>
     </v-hover>
-    <!-- <p v-if="pickedChampion">{{ pickedChampion }}</p> -->
   </div>
 </template>
 
@@ -35,26 +38,22 @@ export default {
     return {
       border: null,
       championName: null,
+
+      border: {
+        border: "10px dotted yellow",
+      },
     };
   },
 
   mounted() {
-    this.test();
+    this.pickChampionName(null);
   },
 
   methods: {
     ...mapActions("items", ["pickChampionName"]),
 
-    pickChampion(ChampionName) {
-      // console.log(ChampionName);
-      this.championName = ChampionName;
-      this.pickChampionName(ChampionName);
-      // console.log(ChampionName);
-    },
-
-    test() {
-      // if (this.name === this.pickedChampion) this.border = "10px dotted yellow";
-      if (this.name === this.pickedChampion) console.log(this.pickedChampion);
+    pickChampion(name) {
+      this.pickChampionName(name);
     },
   },
 };

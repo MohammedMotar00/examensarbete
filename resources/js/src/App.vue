@@ -36,4 +36,13 @@ export default {
   position: absolute;
   width: 100%;
 }
+
+.add-icon {
+  color: blue !important;
+  cursor: pointer;
+  transition: all 1s ease-in-out;
+  &:hover {
+    transform: scale(1.2, 1.2);
+  }
+}
 </style>

@@ -1,3 +1,4 @@
 export default {
-    pickedChampionName: ""
+    pickedChampionName: "",
+    items: []
 };

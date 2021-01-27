@@ -2,26 +2,29 @@
   <div>
     <v-hover v-slot="{ hover }">
       <v-card
-        class="mx-auto"
+        class="mx-auto aaa"
         color="grey lighten-4"
         style="cursor: pointer"
         @click="pickChampion(name)"
       >
-        <v-img
-          :src="image"
-          :style="name === pickedChampion && border"
-          style="background-color: black"
-        >
-          <v-expand-transition>
-            <div
-              v-if="hover"
-              class="d-flex transition-fast-in-fast-out black darken-1 v-card--reveal display-2 white--text"
-              style="height: 100%"
-            >
-              <p style="text-align: center">{{ name }}</p>
-            </div>
-          </v-expand-transition>
-        </v-img>
+        <div class="hej">
+          <v-img
+            class="nej"
+            :src="image"
+            :style="name === pickedChampion && border"
+            style="background-color: black"
+          >
+            <v-expand-transition>
+              <div
+                v-if="hover"
+                class="d-flex transition-fast-in-fast-out black darken-1 v-card--reveal display-2 white--text"
+                style="height: 100%"
+              >
+                <p style="text-align: center">{{ name }}</p>
+              </div>
+            </v-expand-transition>
+          </v-img>
+        </div>
       </v-card>
     </v-hover>
   </div>
@@ -60,4 +63,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.aaa {
+  border: 1px solid blue;
+  width: 80%;
+}
+.hej {
+  border: 1px solid red;
+  // height: 400px;
+  // width: 80%;
+}
+
+.nej {
+  object-fit: contain;
+  // height: 80%;
+  // width: 80%;
+}
 </style>

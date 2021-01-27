@@ -18,11 +18,13 @@ export default {
   mounted() {
     this.usernameLoggedIn();
     this.fetchChampions();
+    this.fetchItems();
   },
 
   methods: {
     ...mapActions(["usernameLoggedIn"]),
     ...mapActions("champions", ["fetchChampions"]),
+    ...mapActions("items", ["fetchItems"]),
   },
 };
 </script>

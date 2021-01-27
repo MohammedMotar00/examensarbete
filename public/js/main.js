@@ -2142,6 +2142,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddItem",
@@ -2151,10 +2157,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       startingItems: [],
       middleItems: [],
       fullItems: [],
-      allItems: []
+      allItems: [],
+      search: "",
+      itemsArr: []
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("items", ["getItems"]))
+  mounted: function mounted() {
+    this.fetchItems();
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("items", ["getItems"])), {}, {
+    filteredData: function filteredData() {
+      var _this = this;
+
+      return this.getItems.filter(function (item) {
+        return item.name.toLowerCase().includes(_this.search.toLowerCase());
+      });
+    } // filterItems() {
+    //   return this.getItems.filter((item) => {
+    //     return item.name.match(this.search);
+    //   });
+    // },
+
+  }),
+  methods: {
+    // ...mapGetters("items", ["getItems"]),
+    fetchItems: function fetchItems() {
+      // this.itemsArr.push(this.getItems);
+      this.itemsArr = this.getItems;
+    }
+  }
 });
 
 /***/ }),
@@ -4151,13 +4182,34 @@ var render = function() {
                       staticClass: "toolbar-top",
                       attrs: { color: "primary", dark: "" }
                     },
-                    [_vm._v("Search " + _vm._s(_vm.title) + " here")]
+                    [
+                      _c(
+                        "div",
+                        { staticStyle: { width: "100%" } },
+                        [
+                          _c("v-text-field", {
+                            attrs: {
+                              label: "Search for " + _vm.title + " here...",
+                              "hide-details": "auto"
+                            },
+                            model: {
+                              value: _vm.search,
+                              callback: function($$v) {
+                                _vm.search = $$v
+                              },
+                              expression: "search"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]
                   ),
                   _vm._v(" "),
-                  _vm._l(_vm.getItems, function(item) {
+                  _vm._l(_vm.getItems, function(item, index) {
                     return _c(
                       "div",
-                      { key: item.id },
+                      { key: index },
                       [
                         _c(
                           "v-col",
@@ -4198,15 +4250,8 @@ var render = function() {
                           _vm._v(
                             "render items here... render items here... render items here...\n              render items here... render items here...\n\n              "
                           ),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            _vm._g({ attrs: { color: "primary" } }, _vm.off),
-                            [_vm._v("save")]
-                          )
-                        ],
-                        1
+                          _c("br")
+                        ]
                       )
                     ],
                     1

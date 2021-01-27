@@ -16,10 +16,16 @@
       <template class="container-container">
         <v-card>
           <div class="container-modal">
-            <v-toolbar class="toolbar-top" color="primary" dark
-              >Search {{ title }} here</v-toolbar
-            >
-            <div v-for="item in getItems" :key="item.id">
+            <v-toolbar class="toolbar-top" color="primary" dark>
+              <div style="width: 100%">
+                <v-text-field
+                  :label="`Search for ${title} here...`"
+                  hide-details="auto"
+                  v-model="search"
+                ></v-text-field>
+              </div>
+            </v-toolbar>
+            <div v-for="(item, index) in getItems" :key="index">
               <v-col style="border: 1px solid blue; width: 100">
                 <!-- <div class="text-h2 pa-12">Hello world!</div> -->
                 <p>{{ item.name }}</p>
@@ -39,7 +45,7 @@
                 <br />
 
                 <!-- <template v-slot:activator="{ off }"> -->
-                <v-btn color="primary" v-on="off">save</v-btn>
+                <!-- <v-btn color="primary" v-on="off">save</v-btn> -->
                 <!-- </template> -->
               </v-toolbar>
             </div>
@@ -64,11 +70,36 @@ export default {
       fullItems: [],
 
       allItems: [],
+      search: "",
+
+      itemsArr: [],
     };
+  },
+
+  mounted() {
+    this.fetchItems();
   },
 
   computed: {
     ...mapGetters("items", ["getItems"]),
+    filteredData() {
+      return this.getItems.filter((item) =>
+        item.name.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+    // filterItems() {
+    //   return this.getItems.filter((item) => {
+    //     return item.name.match(this.search);
+    //   });
+    // },
+  },
+
+  methods: {
+    // ...mapGetters("items", ["getItems"]),
+    fetchItems() {
+      // this.itemsArr.push(this.getItems);
+      this.itemsArr = this.getItems;
+    },
   },
 };
 </script>

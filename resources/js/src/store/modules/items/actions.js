@@ -17,3 +17,8 @@ export const fetchItems = ({ commit }) => {
         commit("SET_ITEMS", items);
     });
 };
+
+export const searchForItems = ({ commit }, payload) => {
+    console.log(payload);
+    commit("SET_FILTER_ITEMS", payload);
+};

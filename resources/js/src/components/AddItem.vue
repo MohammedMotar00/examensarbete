@@ -6,7 +6,6 @@
     <v-dialog
       transition="dialog-top-transition"
       max-width="600"
-      height="50"
       style="position: relative"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -16,37 +15,53 @@
       <template class="container-container">
         <v-card>
           <div class="container-modal">
-            <v-toolbar class="toolbar-top" color="primary" dark>
+            <v-toolbar
+              class="toolbar-top"
+              color="primary"
+              dark
+              style="height: 100px"
+            >
               <div style="width: 100%">
                 <v-text-field
                   :label="`Search for ${title} here...`"
                   hide-details="auto"
-                  v-model="search"
+                  v-model="searchText"
+                  @keyup="filterItems"
                 ></v-text-field>
               </div>
             </v-toolbar>
-            <div v-for="(item, index) in getItems" :key="index">
-              <v-col style="border: 1px solid blue; width: 100">
-                <!-- <div class="text-h2 pa-12">Hello world!</div> -->
-                <p>{{ item.name }}</p>
-                <v-img
+
+            <!-- <div class="d-flex"> -->
+            <v-row
+              class="justify-center flex-wrap justify-space-around mt-2 ma-auto"
+              style="width: 100%"
+            >
+              <v-col
+                cols="6"
+                sm="3"
+                v-for="(item, index) in filterSearchItems"
+                :key="index"
+                style="border: 1px solid blue"
+                class="text-center d-flex align-center justify-center"
+              >
+                <Item
+                  :image="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
+                  :name="item.name"
+                />
+                <!-- <v-img
                   height="50"
                   width="50"
                   :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
+                  class="ma-auto"
                 />
+                <p>{{ item.name }}</p> -->
               </v-col>
-            </div>
+            </v-row>
 
             <div class="toolbar-bottom">
-              <v-toolbar color="primary" dark
+              <v-toolbar color="primary" dark style="height: 100px"
                 >render items here... render items here... render items here...
                 render items here... render items here...
-
-                <br />
-
-                <!-- <template v-slot:activator="{ off }"> -->
-                <!-- <v-btn color="primary" v-on="off">save</v-btn> -->
-                <!-- </template> -->
               </v-toolbar>
             </div>
           </div>
@@ -57,11 +72,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import Item from "./Item";
 
 export default {
   name: "AddItem",
   props: ["title", "pickedChampion"],
+  components: { Item },
 
   data() {
     return {
@@ -70,48 +87,38 @@ export default {
       fullItems: [],
 
       allItems: [],
-      search: "",
+      searchText: "",
 
       itemsArr: [],
     };
   },
 
-  mounted() {
-    this.fetchItems();
-  },
-
   computed: {
-    ...mapGetters("items", ["getItems"]),
-    filteredData() {
-      return this.getItems.filter((item) =>
-        item.name.toLowerCase().includes(this.search.toLowerCase())
-      );
-    },
-    // filterItems() {
-    //   return this.getItems.filter((item) => {
-    //     return item.name.match(this.search);
-    //   });
-    // },
+    ...mapGetters("items", ["getItems", "filterSearchItems"]),
   },
 
   methods: {
-    // ...mapGetters("items", ["getItems"]),
-    fetchItems() {
-      // this.itemsArr.push(this.getItems);
-      this.itemsArr = this.getItems;
+    ...mapActions("items", ["searchForItems"]),
+
+    filterItems(event) {
+      this.searchForItems(event?.target?.value);
     },
+  },
+
+  mounted() {
+    this.filterItems();
+    // console.log(this.searchText);
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// .container-container {
-//   position: relative;
-// }
-
 .container-modal {
   position: relative;
   border: 1px solid red;
+  min-height: 200px;
+  width: 100%;
+  // overflow-x: hidden;
 }
 
 .toolbar-top {

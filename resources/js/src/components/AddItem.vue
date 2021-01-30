@@ -44,17 +44,20 @@
                 style="border: 1px solid blue"
                 class="text-center d-flex align-center justify-center"
               >
-                <Item
+                <!-- <Item
                   :image="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
-                  :name="item.name"
-                />
-                <!-- <v-img
-                  height="50"
-                  width="50"
-                  :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
-                  class="ma-auto"
-                />
-                <p>{{ item.name }}</p> -->
+                  :itemInfo="item"
+                  :title="title"
+                /> -->
+                <div class="item" @click="addItem(item.name, title)">
+                  <v-img
+                    height="50"
+                    width="50"
+                    :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
+                    class="ma-auto"
+                  />
+                  <p>{{ item.name }}</p>
+                </div>
               </v-col>
             </v-row>
 
@@ -63,11 +66,13 @@
                 >render items here... render items here... render items here...
                 render items here... render items here...
               </v-toolbar>
+              <v-btn @click="saveItems" color="success">save</v-btn>
             </div>
           </div>
         </v-card>
       </template>
     </v-dialog>
+    {{ allItems }}
   </v-col>
 </template>
 
@@ -90,6 +95,8 @@ export default {
       searchText: "",
 
       itemsArr: [],
+
+      itemArr: [],
     };
   },
 
@@ -103,11 +110,22 @@ export default {
     filterItems(event) {
       this.searchForItems(event?.target?.value);
     },
+
+    addItem(item, title) {
+      title === "Starting Items" && this.startingItems.push(item);
+      title === "Middle Items" && this.middleItems.push(item);
+      title === "Full Items" && this.fullItems.push(item);
+    },
+
+    saveItems() {
+      this.allItems.push(this.startingItems);
+      this.allItems.push(this.middleItems);
+      this.allItems.push(this.fullItems);
+    },
   },
 
   mounted() {
     this.filterItems();
-    // console.log(this.searchText);
   },
 };
 </script>

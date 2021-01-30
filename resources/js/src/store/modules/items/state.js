@@ -1,5 +1,9 @@
 export default {
     pickedChampionName: "",
     items: [],
-    searchForItem: ""
+    searchForItem: "",
+    allItems: [],
+    startingItems: [],
+    middleItems: [],
+    fullItems: []
 };

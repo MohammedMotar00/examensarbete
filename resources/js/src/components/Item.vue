@@ -47,12 +47,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.item {
-  cursor: pointer;
-  opacity: 1;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
 </style>

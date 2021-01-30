@@ -49,7 +49,10 @@
                   :itemInfo="item"
                   :title="title"
                 /> -->
-                <div class="item" @click="addItem(item.name, title)">
+                <div
+                  class="item"
+                  @click="addItem(item.name, item.image.full, title)"
+                >
                   <v-img
                     height="50"
                     width="50"
@@ -62,28 +65,53 @@
             </v-row>
 
             <div class="toolbar-bottom">
-              <v-toolbar color="primary" dark style="height: 100px"
-                >render items here... render items here... render items here...
-                render items here... render items here...
+              <v-toolbar color="primary" dark style="height: 100px">
+                <!-- <AddedItems
+                  :title="title"
+                  :startingItems="startingItems"
+                  :middleItems="middleItems"
+                  :fullItems="fullItems"
+                /> -->
+                <div v-if="title === 'Starting Items'">
+                  <div v-for="(item, index) in startingItems" :key="index">
+                    <v-img
+                      height="50"
+                      width="50"
+                      :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image}`"
+                      class="ma-auto"
+                    />
+                    <p>{{ item.name }}</p>
+                  </div>
+                </div>
+                <v-btn @click="saveItems(title)" color="success">save</v-btn>
               </v-toolbar>
-              <v-btn @click="saveItems" color="success">save</v-btn>
             </div>
           </div>
         </v-card>
       </template>
     </v-dialog>
-    {{ allItems }}
+    <!-- {{ allItems }} -->
+    <div v-for="(item, index) in allItems" :key="index">
+      <!-- <v-img
+        height="50"
+        width="50"
+        :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image}`"
+        class="ma-auto"
+      /> -->
+      <p>{{ item }}</p>
+    </div>
   </v-col>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Item from "./Item";
+import AddedItems from "./AddedItems";
 
 export default {
   name: "AddItem",
   props: ["title", "pickedChampion"],
-  components: { Item },
+  components: { Item, AddedItems },
 
   data() {
     return {
@@ -105,27 +133,78 @@ export default {
   },
 
   methods: {
-    ...mapActions("items", ["searchForItems"]),
+    ...mapActions("items", [
+      "searchForItems",
+      "saveStartingItems",
+      "saveMiddleItems",
+      "saveFullItems",
+    ]),
 
     filterItems(event) {
       this.searchForItems(event?.target?.value);
     },
 
-    addItem(item, title) {
-      title === "Starting Items" && this.startingItems.push(item);
-      title === "Middle Items" && this.middleItems.push(item);
-      title === "Full Items" && this.fullItems.push(item);
+    addItem(item, image, title) {
+      // title === "Starting Items" && this.startingItems.push(item);
+      if (title === "Starting Items") {
+        if (this.startingItems.length <= 5) {
+          this.startingItems.push({ item, image });
+        }
+      }
+
+      if (title === "Middle Items") {
+        if (this.middleItems.length <= 5) {
+          this.middleItems.push({ item, image });
+        }
+      }
+
+      if (title === "Full Items") {
+        if (this.fullItems.length <= 5) {
+          this.fullItems.push({ item, image });
+        }
+      }
     },
 
-    saveItems() {
-      this.allItems.push(this.startingItems);
-      this.allItems.push(this.middleItems);
-      this.allItems.push(this.fullItems);
+    saveItems(title) {
+      if (title === "Starting Items") {
+        // this.allItems = [];
+        // this.allItems.push({ startingItems: this.startingItems });
+        // for (let item of this.startingItems)
+        //   this.allItems.push({ startingItems: item });
+        // this.allItems.push(this.startingItems);
+        this.saveStartingItems(null);
+        let data = [];
+        for (let item of this.startingItems) {
+          data.push(item);
+        }
+
+        this.saveStartingItems(data);
+        data = [];
+      }
+
+      if (title === "Middle Items") {
+        // this.allItems = [];
+        // for (let item of this.middleItems)
+        //   this.allItems.push({ middleItems: item });
+        this.saveMiddleItems(this.middleItems);
+      }
+
+      if (title === "Full Items") {
+        // this.allItems = [];
+        // for (let item of this.fullItems)
+        //   this.allItems.push({ fullItems: item });
+        this.saveFullItems(this.fullItems);
+      }
+
+      // this.saveAllItems(this.allItems);
     },
+
+    itemsInModal(item) {},
   },
 
   mounted() {
     this.filterItems();
+    console.log(this.allItems);
   },
 };
 </script>
@@ -152,5 +231,14 @@ export default {
   width: 100%;
   bottom: 0;
   left: 0;
+}
+
+.item {
+  cursor: pointer;
+  opacity: 1;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 </style>

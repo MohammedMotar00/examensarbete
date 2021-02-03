@@ -2086,18 +2086,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _Item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Item */ "./resources/js/src/components/Item.vue");
 /* harmony import */ var _AddedItems__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddedItems */ "./resources/js/src/components/AddedItems.vue");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -2224,20 +2222,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       itemArr: []
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("items", ["getItems", "filterSearchItems"])),
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("items", ["searchForItems", "saveStartingItems", "saveMiddleItems", "saveFullItems"])), {}, {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("items", ["getItems", "filterSearchItems", "getStartingItems", "getMiddleItems", "getFullItems"])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("items", ["searchForItems", "saveStartingItems", "saveMiddleItems", "saveFullItems", "clearStartingItems", "clearMiddleItems", "clearFullItems"])), {}, {
     filterItems: function filterItems(event) {
       var _event$target;
 
       this.searchForItems(event === null || event === void 0 ? void 0 : (_event$target = event.target) === null || _event$target === void 0 ? void 0 : _event$target.value);
     },
-    addItem: function addItem(item, image, title) {
-      // title === "Starting Items" && this.startingItems.push(item);
+    addItem: function addItem(name, image, title) {
+      var key = Math.floor(Math.random() * 120);
+      var id = null;
+      if (key !== Math.floor(Math.random() * 120)) id = key; // title === "Starting Items" && this.startingItems.push(item);
+
       if (title === "Starting Items") {
         if (this.startingItems.length <= 5) {
           this.startingItems.push({
-            item: item,
-            image: image
+            name: name,
+            image: image,
+            id: id
           });
         }
       }
@@ -2245,8 +2247,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (title === "Middle Items") {
         if (this.middleItems.length <= 5) {
           this.middleItems.push({
-            item: item,
-            image: image
+            name: name,
+            image: image,
+            id: id
           });
         }
       }
@@ -2254,41 +2257,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (title === "Full Items") {
         if (this.fullItems.length <= 5) {
           this.fullItems.push({
-            item: item,
-            image: image
+            name: name,
+            image: image,
+            id: id
           });
         }
       }
     },
     saveItems: function saveItems(title) {
       if (title === "Starting Items") {
-        // this.allItems = [];
-        // this.allItems.push({ startingItems: this.startingItems });
-        // for (let item of this.startingItems)
-        //   this.allItems.push({ startingItems: item });
-        // this.allItems.push(this.startingItems);
-        this.saveStartingItems(null);
-        var data = [];
-
-        var _iterator = _createForOfIteratorHelper(this.startingItems),
-            _step;
-
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var item = _step.value;
-            data.push(item);
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-
-        this.saveStartingItems(data);
-        data = [];
+        this.saveStartingItems(this.startingItems);
       }
 
       if (title === "Middle Items") {
+        // this.clearMiddleItems();
         // this.allItems = [];
         // for (let item of this.middleItems)
         //   this.allItems.push({ middleItems: item });
@@ -2296,6 +2278,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (title === "Full Items") {
+        // this.clearFullItems();
         // this.allItems = [];
         // for (let item of this.fullItems)
         //   this.allItems.push({ fullItems: item });
@@ -2303,11 +2286,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } // this.saveAllItems(this.allItems);
 
     },
-    itemsInModal: function itemsInModal(item) {}
+    getItemsFromVuex: function getItemsFromVuex() {
+      for (var item in this.getStartingItems) {
+        console.log(item);
+        this.startingItems.push(item);
+      }
+    },
+    openModal: function openModal(title) {// title === "Starting Items" && this.clearStartingItems();
+      // title === "Middle Items" && this.clearMiddleItems();
+      // title === "Full Items" && this.clearFullItems();
+    }
   }),
   mounted: function mounted() {
-    this.filterItems();
-    console.log(this.allItems);
+    this.filterItems(); // console.log(this.allItems);
+
+    this.getItemsFromVuex();
   }
 });
 
@@ -2322,6 +2315,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2336,11 +2336,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["title", "startingItems", "middleItems", "fullItems"],
+  props: ["title"],
   data: function data() {
     return {};
-  }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("items", ["getStartingItems", "getMiddleItems", "getFullItems"]))
 });
 
 /***/ }),
@@ -2677,6 +2695,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
  // import AddItems from "../components/AddItems";
@@ -2687,7 +2706,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ChampionForItems: _components_ChampionForItems__WEBPACK_IMPORTED_MODULE_1__["default"],
     AddItem: _components_AddItem__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])("champions", ["champions"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])("items", ["pickedChampionName"]))
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])("champions", ["champions"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])("items", ["pickedChampionName"])),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("items", ["saveItemsToDB"])), {}, {
+    saveItems: function saveItems() {
+      this.saveItemsToDB("hejsan");
+    }
+  })
 });
 
 /***/ }),
@@ -4335,187 +4359,201 @@ var render = function() {
     [
       _c("p", [_vm._v(_vm._s(_vm.title))]),
       _vm._v(" "),
-      _c("v-icon", { staticClass: "add-icon", attrs: { "x-large": "" } }, [
-        _vm._v("mdi-plus-box")
-      ]),
-      _vm._v(" "),
       _c(
-        "v-dialog",
-        {
-          staticStyle: { position: "relative" },
-          attrs: { transition: "dialog-top-transition", "max-width": "600" },
-          scopedSlots: _vm._u([
-            {
-              key: "activator",
-              fn: function(ref) {
-                var on = ref.on
-                var attrs = ref.attrs
-                return [
-                  _c(
-                    "v-btn",
-                    _vm._g(
-                      _vm._b(
-                        { attrs: { color: "primary" } },
-                        "v-btn",
-                        attrs,
-                        false
-                      ),
-                      on
-                    ),
-                    [_vm._v("+")]
-                  )
-                ]
-              }
-            }
-          ])
-        },
+        "v-row",
         [
+          _c("AddedItems", { attrs: { title: _vm.title } }),
           _vm._v(" "),
-          [
-            _c("v-card", [
-              _c(
-                "div",
-                { staticClass: "container-modal" },
-                [
-                  _c(
-                    "v-toolbar",
-                    {
-                      staticClass: "toolbar-top",
-                      staticStyle: { height: "100px" },
-                      attrs: { color: "primary", dark: "" }
-                    },
-                    [
+          _c(
+            "v-dialog",
+            {
+              staticStyle: { position: "relative" },
+              attrs: {
+                transition: "dialog-top-transition",
+                "max-width": "600"
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "activator",
+                  fn: function(ref) {
+                    var on = ref.on
+                    var attrs = ref.attrs
+                    return [
                       _c(
-                        "div",
-                        { staticStyle: { width: "100%" } },
-                        [
-                          _c("v-text-field", {
-                            attrs: {
-                              label: "Search for " + _vm.title + " here...",
-                              "hide-details": "auto"
-                            },
-                            on: { keyup: _vm.filterItems },
-                            model: {
-                              value: _vm.searchText,
-                              callback: function($$v) {
-                                _vm.searchText = $$v
-                              },
-                              expression: "searchText"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-row",
-                    {
-                      staticClass:
-                        "justify-center flex-wrap justify-space-around mt-2 ma-auto",
-                      staticStyle: { width: "100%" }
-                    },
-                    _vm._l(_vm.filterSearchItems, function(item, index) {
-                      return _c(
-                        "v-col",
-                        {
-                          key: index,
-                          staticClass:
-                            "text-center d-flex align-center justify-center",
-                          staticStyle: { border: "1px solid blue" },
-                          attrs: { cols: "6", sm: "3" }
-                        },
-                        [
-                          _c(
-                            "div",
+                        "v-btn",
+                        _vm._g(
+                          _vm._b(
                             {
-                              staticClass: "item",
+                              attrs: { color: "primary" },
                               on: {
                                 click: function($event) {
-                                  return _vm.addItem(
-                                    item.name,
-                                    item.image.full,
-                                    _vm.title
-                                  )
+                                  return _vm.openModal(_vm.title)
                                 }
                               }
                             },
-                            [
-                              _c("v-img", {
-                                staticClass: "ma-auto",
-                                attrs: {
-                                  height: "50",
-                                  width: "50",
-                                  src:
-                                    "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
-                                    item.image.full
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("p", [_vm._v(_vm._s(item.name))])
-                            ],
-                            1
-                          )
-                        ]
+                            "v-btn",
+                            attrs,
+                            false
+                          ),
+                          on
+                        ),
+                        [_vm._v("+")]
                       )
-                    }),
-                    1
-                  ),
-                  _vm._v(" "),
+                    ]
+                  }
+                }
+              ])
+            },
+            [
+              _vm._v(" "),
+              [
+                _c("v-card", [
                   _c(
                     "div",
-                    { staticClass: "toolbar-bottom" },
+                    { staticClass: "container-modal" },
                     [
                       _c(
                         "v-toolbar",
                         {
+                          staticClass: "toolbar-top",
                           staticStyle: { height: "100px" },
                           attrs: { color: "primary", dark: "" }
                         },
                         [
-                          _vm.title === "Starting Items"
-                            ? _c(
-                                "div",
-                                _vm._l(_vm.startingItems, function(
-                                  item,
-                                  index
-                                ) {
-                                  return _c(
-                                    "div",
-                                    { key: index },
-                                    [
-                                      _c("v-img", {
-                                        staticClass: "ma-auto",
-                                        attrs: {
-                                          height: "50",
-                                          width: "50",
-                                          src:
-                                            "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
-                                            item.image
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("p", [_vm._v(_vm._s(item.name))])
-                                    ],
-                                    1
-                                  )
-                                }),
-                                0
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
                           _c(
-                            "v-btn",
-                            {
-                              attrs: { color: "success" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.saveItems(_vm.title)
+                            "div",
+                            { staticStyle: { width: "100%" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  label: "Search for " + _vm.title + " here...",
+                                  "hide-details": "auto"
+                                },
+                                on: { keyup: _vm.filterItems },
+                                model: {
+                                  value: _vm.searchText,
+                                  callback: function($$v) {
+                                    _vm.searchText = $$v
+                                  },
+                                  expression: "searchText"
                                 }
-                              }
+                              })
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        {
+                          staticClass:
+                            "justify-center flex-wrap justify-space-around mt-2 ma-auto",
+                          staticStyle: { width: "100%" }
+                        },
+                        _vm._l(_vm.filterSearchItems, function(item, index) {
+                          return _c(
+                            "v-col",
+                            {
+                              key: index,
+                              staticClass:
+                                "text-center d-flex align-center justify-center",
+                              staticStyle: { border: "1px solid blue" },
+                              attrs: { cols: "6", sm: "3" }
                             },
-                            [_vm._v("save")]
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "item",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.addItem(
+                                        item.name,
+                                        item.image.full,
+                                        _vm.title
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-img", {
+                                    staticClass: "ma-auto",
+                                    attrs: {
+                                      height: "50",
+                                      width: "50",
+                                      src:
+                                        "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
+                                        item.image.full
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("p", [_vm._v(_vm._s(item.name))])
+                                ],
+                                1
+                              )
+                            ]
+                          )
+                        }),
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "toolbar-bottom" },
+                        [
+                          _c(
+                            "v-toolbar",
+                            {
+                              staticStyle: { height: "100px" },
+                              attrs: { color: "primary", dark: "" }
+                            },
+                            [
+                              _vm.title === "Starting Items"
+                                ? _c(
+                                    "div",
+                                    _vm._l(_vm.startingItems, function(
+                                      item,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "div",
+                                        { key: index },
+                                        [
+                                          _c("v-img", {
+                                            staticClass: "ma-auto",
+                                            attrs: {
+                                              height: "50",
+                                              width: "50",
+                                              src:
+                                                "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
+                                                item.image
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("p", [_vm._v(_vm._s(item.name))])
+                                        ],
+                                        1
+                                      )
+                                    }),
+                                    0
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "success" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.saveItems(_vm.title)
+                                    }
+                                  }
+                                },
+                                [_vm._v("save")]
+                              )
+                            ],
+                            1
                           )
                         ],
                         1
@@ -4523,16 +4561,16 @@ var render = function() {
                     ],
                     1
                   )
-                ],
-                1
-              )
-            ])
-          ]
+                ])
+              ]
+            ],
+            2
+          )
         ],
-        2
+        1
       ),
       _vm._v(" "),
-      _vm._l(_vm.allItems, function(item, index) {
+      _vm._l(_vm.getStartingItems, function(item, index) {
         return _c("div", { key: index }, [_c("p", [_vm._v(_vm._s(item))])])
       })
     ],
@@ -4565,18 +4603,103 @@ var render = function() {
     _vm.title === "Starting Items"
       ? _c(
           "div",
-          _vm._l(_vm.startingItems, function(item, index) {
-            return _c("div", { key: index }, [
-              _vm._v("\n      " + _vm._s(item) + "\n    ")
-            ])
+          { staticClass: "d-flex px-2" },
+          _vm._l(_vm.getStartingItems, function(item, index) {
+            return _c(
+              "div",
+              { key: index },
+              [
+                _c("v-img", {
+                  staticClass: "ma-auto",
+                  attrs: {
+                    height: "50",
+                    width: "50",
+                    src:
+                      "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
+                      item.image
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", [_vm._v(_vm._s(item.name))])
+              ],
+              1
+            )
           }),
           0
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.title === "Middle Items" ? _c("div") : _vm._e(),
+    _vm.title === "Middle Items"
+      ? _c("div", { staticClass: "d-flex" }, [
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid blue"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid blue"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid blue"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid blue"
+            }
+          })
+        ])
+      : _vm._e(),
     _vm._v(" "),
-    _vm.title === "Full Items" ? _c("div") : _vm._e()
+    _vm.title === "Full Items"
+      ? _c("div", { staticClass: "d-flex" }, [
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid green"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid green"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid green"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticStyle: {
+              height: "40px",
+              width: "40px",
+              border: "1px solid green"
+            }
+          })
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -5080,6 +5203,12 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { color: "success" }, on: { click: _vm.saveItems } },
+            [_vm._v("Save items")]
           )
         ],
         1
@@ -67568,7 +67697,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/src/store/modules/items/actions.js ***!
   \*********************************************************/
-/*! exports provided: pickChampionName, fetchItems, searchForItems, saveStartingItems, saveMiddleItems, saveFullItems */
+/*! exports provided: pickChampionName, fetchItems, searchForItems, saveStartingItems, saveMiddleItems, saveFullItems, clearStartingItems, clearMiddleItems, clearFullItems, saveItemsToDB */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67579,7 +67708,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveStartingItems", function() { return saveStartingItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveMiddleItems", function() { return saveMiddleItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveFullItems", function() { return saveFullItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearStartingItems", function() { return clearStartingItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearMiddleItems", function() { return clearMiddleItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearFullItems", function() { return clearFullItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveItemsToDB", function() { return saveItemsToDB; });
 /* harmony import */ var _apis_items__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../apis/items */ "./resources/js/src/apis/items.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -67591,6 +67726,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 var pickChampionName = function pickChampionName(_ref, pickedChampion) {
@@ -67634,6 +67770,29 @@ var saveMiddleItems = function saveMiddleItems(_ref5, items) {
 var saveFullItems = function saveFullItems(_ref6, items) {
   var commit = _ref6.commit;
   commit("SET_SAVE_FULL_ITEMS", items);
+}; // clear starting, middle and full items
+
+var clearStartingItems = function clearStartingItems(_ref7) {
+  var commit = _ref7.commit;
+  return commit("SET_CLEAR_STARTING_ITEMS");
+};
+var clearMiddleItems = function clearMiddleItems(_ref8) {
+  var commit = _ref8.commit;
+  return commit("SET_CLEAR_MIDDLE_ITEMS");
+};
+var clearFullItems = function clearFullItems(_ref9) {
+  var commit = _ref9.commit;
+  return commit("SET_CLEAR_FULL_ITEMS");
+}; // Save to DB
+// export const saveItemsToDB = ({ commit }) => commit("SAVE_ITEMS_TO_DB");
+
+var saveItemsToDB = function saveItemsToDB(_ref10, value) {
+  var commit = _ref10.commit;
+  axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/shen", {
+    title: value
+  }).then(function (res) {
+    console.log(res);
+  });
 };
 
 /***/ }),
@@ -67642,7 +67801,7 @@ var saveFullItems = function saveFullItems(_ref6, items) {
 /*!*********************************************************!*\
   !*** ./resources/js/src/store/modules/items/getters.js ***!
   \*********************************************************/
-/*! exports provided: getPickedChampionName, getItems, filterSearchItems */
+/*! exports provided: getPickedChampionName, getItems, filterSearchItems, getStartingItems, getMiddleItems, getFullItems, getAllItems */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67650,6 +67809,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPickedChampionName", function() { return getPickedChampionName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterSearchItems", function() { return filterSearchItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStartingItems", function() { return getStartingItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMiddleItems", function() { return getMiddleItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFullItems", function() { return getFullItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllItems", function() { return getAllItems; });
 var getPickedChampionName = function getPickedChampionName(state) {
   return state.pickedChampionName;
 };
@@ -67665,6 +67828,32 @@ var filterSearchItems = function filterSearchItems(state) {
 
     return item === null || item === void 0 ? void 0 : (_item$name = item.name) === null || _item$name === void 0 ? void 0 : (_item$name$toLowerCas = _item$name.toLowerCase()) === null || _item$name$toLowerCas === void 0 ? void 0 : _item$name$toLowerCas.match(search === null || search === void 0 ? void 0 : search.toLowerCase());
   });
+}; // Get starting, middle and full items
+
+var getStartingItems = function getStartingItems(state) {
+  return state.startingItems[0];
+};
+var getMiddleItems = function getMiddleItems(state) {
+  return state.middleItems[0];
+};
+var getFullItems = function getFullItems(state) {
+  return state.fullItems[0];
+}; // Get all items
+
+var getAllItems = function getAllItems(state) {
+  var starting = state.startingItems[0];
+  var middle = state.middleItems[0];
+  var full = state.fullItems[0];
+  var arr = [];
+  arr.push({
+    starting: starting,
+    middle: middle,
+    full: full
+  }); // arr.push(starting);
+  // arr.push(middle);
+  // arr.push(full);
+
+  return arr[0];
 };
 
 /***/ }),
@@ -67700,7 +67889,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/src/store/modules/items/mutations.js ***!
   \***********************************************************/
-/*! exports provided: SET_PICKED_CHAMPION, SET_ITEMS, SET_FILTER_ITEMS, SET_SAVE_STARTING_ITEMS, SET_SAVE_MIDDLE_ITEMS, SET_SAVE_FULL_ITEMS */
+/*! exports provided: SET_PICKED_CHAMPION, SET_ITEMS, SET_FILTER_ITEMS, SET_SAVE_STARTING_ITEMS, SET_SAVE_MIDDLE_ITEMS, SET_SAVE_FULL_ITEMS, getStartingItems */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67711,6 +67900,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SAVE_STARTING_ITEMS", function() { return SET_SAVE_STARTING_ITEMS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SAVE_MIDDLE_ITEMS", function() { return SET_SAVE_MIDDLE_ITEMS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SAVE_FULL_ITEMS", function() { return SET_SAVE_FULL_ITEMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStartingItems", function() { return getStartingItems; });
 var SET_PICKED_CHAMPION = function SET_PICKED_CHAMPION(state, data) {
   state.pickedChampionName = data;
 };
@@ -67724,6 +67914,7 @@ var SET_FILTER_ITEMS = function SET_FILTER_ITEMS(state, value) {
 // };
 
 var SET_SAVE_STARTING_ITEMS = function SET_SAVE_STARTING_ITEMS(state, items) {
+  state.startingItems = [];
   state.startingItems.push(items);
 };
 var SET_SAVE_MIDDLE_ITEMS = function SET_SAVE_MIDDLE_ITEMS(state, items) {
@@ -67731,7 +67922,13 @@ var SET_SAVE_MIDDLE_ITEMS = function SET_SAVE_MIDDLE_ITEMS(state, items) {
 };
 var SET_SAVE_FULL_ITEMS = function SET_SAVE_FULL_ITEMS(state, items) {
   state.fullItems.push(items);
-};
+}; // Clear items
+// export const SET_CLEAR_STARTING_ITEMS = state => (state.startingItems = null);
+// export const SET_CLEAR_MIDDLE_ITEMS = state => (state.startingItems = null);
+// export const SET_CLEAR_FULL_ITEMS = state => (state.startingItems = null);
+// Save items to DB
+
+var getStartingItems = function getStartingItems(state) {};
 
 /***/ }),
 

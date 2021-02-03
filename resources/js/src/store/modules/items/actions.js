@@ -1,4 +1,5 @@
 import items from "../../../apis/items";
+import axios from "axios";
 
 export const pickChampionName = ({ commit }, pickedChampion) => {
     commit("SET_PICKED_CHAMPION", pickedChampion);
@@ -36,4 +37,21 @@ export const saveMiddleItems = ({ commit }, items) => {
 };
 export const saveFullItems = ({ commit }, items) => {
     commit("SET_SAVE_FULL_ITEMS", items);
+};
+
+// clear starting, middle and full items
+export const clearStartingItems = ({ commit }) =>
+    commit("SET_CLEAR_STARTING_ITEMS");
+
+export const clearMiddleItems = ({ commit }) =>
+    commit("SET_CLEAR_MIDDLE_ITEMS");
+
+export const clearFullItems = ({ commit }) => commit("SET_CLEAR_FULL_ITEMS");
+
+// Save to DB
+// export const saveItemsToDB = ({ commit }) => commit("SAVE_ITEMS_TO_DB");
+export const saveItemsToDB = ({ commit }, value) => {
+    axios.post("/api/shen", { title: value }).then(res => {
+        console.log(res);
+    });
 };

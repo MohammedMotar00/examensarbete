@@ -34,12 +34,13 @@
           <AddItem title="Full Items" :pickedChampion="pickedChampionName" />
         </v-col>
       </v-row>
+      <v-btn @click="saveItems" color="success">Save items</v-btn>
     </v-card>
   </v-container>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import ChampionForItems from "../components/ChampionForItems";
 import AddItem from "../components/AddItem";
 // import AddItems from "../components/AddItems";
@@ -51,6 +52,15 @@ export default {
   computed: {
     ...mapState("champions", ["champions"]),
     ...mapState("items", ["pickedChampionName"]),
+    // ...mapActions("items", ["saveItemsToDB"]),
+  },
+
+  methods: {
+    ...mapActions("items", ["saveItemsToDB"]),
+
+    saveItems() {
+      this.saveItemsToDB("hejsan");
+    },
   },
 };
 </script>

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import Champion from "../components/Champion";
 
 export default {
@@ -43,6 +43,14 @@ export default {
 
   computed: {
     ...mapState("champions", ["champions"]),
+  },
+
+  methods: {
+    ...mapActions("items", ["clearChampionItemsCollections"]),
+  },
+
+  mounted() {
+    this.clearChampionItemsCollections();
   },
 };
 </script>

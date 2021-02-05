@@ -8,8 +8,6 @@ use App\Models\Shen;
 
 class ShenController extends Controller
 {
-  //
-
   public function store(Request $request)
   {
     $shen = new Shen();
@@ -18,6 +16,13 @@ class ShenController extends Controller
     $shen->items = $request->items;
     // $shen->items = $request->items['starting'];
     $shen->save();
+
+    return response()->json($shen);
+  }
+
+  public function index()
+  {
+    $shen = Shen::all();
 
     return response()->json($shen);
   }

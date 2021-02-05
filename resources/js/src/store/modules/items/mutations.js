@@ -10,12 +10,7 @@ export const SET_FILTER_ITEMS = (state, value) => {
     state.searchForItem = value;
 };
 
-// export const SET_SAVE_ALL_ITEMS = (state, items) => {
-//     state.allItems.push(items);
-// };
-
 export const SET_SAVE_STARTING_ITEMS = (state, items) => {
-    state.startingItems = [];
     state.startingItems.push(items);
 };
 export const SET_SAVE_MIDDLE_ITEMS = (state, items) => {
@@ -26,10 +21,26 @@ export const SET_SAVE_FULL_ITEMS = (state, items) => {
 };
 
 // Clear items
+export const SET_CLEAR_STARTING_ITEMS = state => (state.startingItems = []);
+export const SET_CLEAR_MIDDLE_ITEMS = state => (state.middleItems = []);
+export const SET_CLEAR_FULL_ITEMS = state => (state.fullItems = []);
 
-// export const SET_CLEAR_STARTING_ITEMS = state => (state.startingItems = null);
-// export const SET_CLEAR_MIDDLE_ITEMS = state => (state.startingItems = null);
-// export const SET_CLEAR_FULL_ITEMS = state => (state.startingItems = null);
+// Get champion items collection from MYSQL
+export const SET_SHEN_COLLECTION = (state, itemCollection) => {
+    state.shenItemsCollection.push(itemCollection);
+};
 
-// Save items to DB
-export const getStartingItems = state => {};
+export const SET_YASUO_COLLECTION = (state, itemCollection) => {
+    state.yasuoItemsCollection.push(itemCollection);
+};
+
+export const SET_YONE_COLLECTION = (state, itemCollection) => {
+    state.yoneItemsCollection.push(itemCollection);
+};
+
+// clear champion items collection array
+export const SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS = state => {
+    state.shenItemsCollection = [];
+    state.yasuoItemsCollection = [];
+    state.yoneItemsCollection = [];
+};

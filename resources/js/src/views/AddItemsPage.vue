@@ -20,6 +20,16 @@
 
       <v-divider></v-divider>
 
+      <v-row class="justify-center">
+        <v-col cols="6">
+          <v-text-field
+            class="text--darken-3 mt-3"
+            label="Title for items"
+            v-model="titleForItemCollection"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
       <v-row>
         <v-col cols="12">
           <AddItem
@@ -49,18 +59,42 @@ export default {
   name: "AddItems",
   components: { ChampionForItems, AddItem },
 
+  data() {
+    return {
+      titleForItemCollection: null,
+    };
+  },
+
   computed: {
     ...mapState("champions", ["champions"]),
     ...mapState("items", ["pickedChampionName"]),
-    // ...mapActions("items", ["saveItemsToDB"]),
   },
 
   methods: {
-    ...mapActions("items", ["saveItemsToDB"]),
+    ...mapActions("items", [
+      "saveItemsToDB",
+      "clearStartingItems",
+      "clearMiddleItems",
+      "clearFullItems",
+    ]),
 
     saveItems() {
-      this.saveItemsToDB("hejsan");
+      if (this.titleForItemCollection !== null) {
+        this.saveItemsToDB(this.titleForItemCollection);
+      } else {
+        return null;
+      }
     },
+
+    clearItems() {
+      this.clearStartingItems();
+      this.clearMiddleItems();
+      this.clearFullItems();
+    },
+  },
+
+  mounted() {
+    this.clearItems();
   },
 };
 </script>

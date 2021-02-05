@@ -6,6 +6,7 @@ import Login from "../views/Login.vue";
 import Main from "../views/Main.vue";
 import ChampionPage from "../views/ChampionPage.vue";
 import AddItemsPage from "../views/AddItemsPage.vue";
+import ViewItemsPage from "../views/ViewItemsPage.vue";
 
 // Components
 
@@ -33,6 +34,11 @@ export default new VueRouter({
             path: "/additems_page",
             name: "AddItemsPage",
             component: AddItemsPage
+        },
+        {
+            path: "/viewitems_page/:item_collection_info",
+            name: "ViewItemsPage",
+            component: ViewItemsPage
         }
     ]
 });

@@ -28,10 +28,26 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "ChampionInfo",
 
-  props: ["image", "championData"],
+  props: ["image", "championData", "championName"],
+
+  methods: {
+    ...mapActions("items", ["fetchItemCollection"]),
+
+    fetchItems() {
+      console.log(this.championName.toLowerCase());
+      this.championName &&
+        this.fetchItemCollection(this.championName.toLowerCase());
+    },
+  },
+
+  mounted() {
+    this.fetchItems();
+  },
 };
 </script>
 

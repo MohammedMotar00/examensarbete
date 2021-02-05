@@ -7,6 +7,7 @@
             <ChampionInfo
               image="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_0.jpg"
               :championData="getShen"
+              :championName="championName"
             />
           </div>
 
@@ -14,6 +15,7 @@
             <ChampionInfo
               image="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_0.jpg"
               :championData="getYasuo"
+              :championName="championName"
             />
           </div>
 
@@ -21,12 +23,25 @@
             <ChampionInfo
               image="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yone_0.jpg"
               :championData="getYone"
+              :championName="championName"
             />
           </div>
+        </v-col>
+      </v-row>
+      <v-divider inset class="ma-5"></v-divider>
+      <v-row class="d-flex flex-wrap">
+        <v-col class="d-flex flex-wrap justify-center">
+          <div v-if="championName === 'Shen'">
+            <ItemCollection :itemCollections="getShenItemsCollection" />
+          </div>
 
-          <v-divider inset class="ma-5"></v-divider>
+          <div v-if="championName === 'Yasuo'">
+            <ItemCollection :itemCollections="getYasuoItemsCollection" />
+          </div>
 
-          <!-- Här alla suggested items som folk väljer! -->
+          <div v-if="championName === 'Yone'">
+            <ItemCollection :itemCollections="getYoneItemsCollection" />
+          </div>
         </v-col>
       </v-row>
     </v-card>
@@ -36,10 +51,11 @@
 <script>
 import { mapGetters } from "vuex";
 import ChampionInfo from "../components/ChampionInfo";
+import ItemCollection from "../components/ItemCollection";
 
 export default {
   name: "ChampionPage",
-  components: { ChampionInfo },
+  components: { ChampionInfo, ItemCollection },
 
   data() {
     return {
@@ -49,6 +65,11 @@ export default {
 
   computed: {
     ...mapGetters("champions", ["getShen", "getYasuo", "getYone"]),
+    ...mapGetters("items", [
+      "getShenItemsCollection",
+      "getYasuoItemsCollection",
+      "getYoneItemsCollection",
+    ]),
   },
 };
 </script>

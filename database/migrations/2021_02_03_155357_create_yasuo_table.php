@@ -16,7 +16,6 @@ class CreateYasuoTable extends Migration
     Schema::create('yasuo', function (Blueprint $table) {
       $table->id();
       $table->timestamps();
-      $table->string('username');
       $table->string('title');
       $table->json('items');
     });

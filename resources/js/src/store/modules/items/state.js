@@ -5,5 +5,10 @@ export default {
     allItems: [],
     startingItems: [],
     middleItems: [],
-    fullItems: []
+    fullItems: [],
+
+    // get champion items collections from MYSQL
+    shenItemsCollection: [],
+    yasuoItemsCollection: [],
+    yoneItemsCollection: []
 };

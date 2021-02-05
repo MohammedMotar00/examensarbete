@@ -23,3 +23,7 @@ export const getAllItems = state => {
     arr.push({ starting, middle, full });
     return arr[0];
 };
+
+export const getShenItemsCollection = state => state.shenItemsCollection[0];
+export const getYasuoItemsCollection = state => state.yasuoItemsCollection[0];
+export const getYoneItemsCollection = state => state.yoneItemsCollection[0];

@@ -148,9 +148,6 @@ export default {
       "saveStartingItems",
       "saveMiddleItems",
       "saveFullItems",
-      "clearStartingItems",
-      "clearMiddleItems",
-      "clearFullItems",
     ]),
 
     filterItems(event) {
@@ -189,30 +186,20 @@ export default {
       }
 
       if (title === "Middle Items") {
-        // this.clearMiddleItems();
-        // this.allItems = [];
-        // for (let item of this.middleItems)
-        //   this.allItems.push({ middleItems: item });
         this.saveMiddleItems(this.middleItems);
       }
 
       if (title === "Full Items") {
-        // this.clearFullItems();
-        // this.allItems = [];
-        // for (let item of this.fullItems)
-        //   this.allItems.push({ fullItems: item });
         this.saveFullItems(this.fullItems);
       }
-
-      // this.saveAllItems(this.allItems);
     },
 
-    getItemsFromVuex() {
-      for (let item in this.getStartingItems) {
-        console.log(item);
-        this.startingItems.push(item);
-      }
-    },
+    // getItemsFromVuex() {
+    //   for (let item in this.getStartingItems) {
+    //     console.log(item);
+    //     this.startingItems.push(item);
+    //   }
+    // },
 
     openModal(title) {
       // title === "Starting Items" && this.clearStartingItems();
@@ -224,7 +211,7 @@ export default {
   mounted() {
     this.filterItems();
     // console.log(this.allItems);
-    this.getItemsFromVuex();
+    // this.getItemsFromVuex();
   },
 };
 </script>

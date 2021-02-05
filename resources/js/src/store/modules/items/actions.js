@@ -50,15 +50,37 @@ export const clearFullItems = ({ commit }) => commit("SET_CLEAR_FULL_ITEMS");
 
 // Save to DB
 // export const saveItemsToDB = ({ commit }) => commit("SAVE_ITEMS_TO_DB");
-export const saveItemsToDB = ({ commit, getters }, value) => {
+export const saveItemsToDB = ({ getters }, collectionTitle) => {
     let items = getters.getAllItems;
+    let pickedChamp = getters.getPickedChampionName.toLowerCase();
 
     axios
-        .post("/api/items/shen", {
-            title: value,
+        .post(`api/items/${pickedChamp}`, {
+            title: collectionTitle,
             items
         })
         .then(res => {
             console.log(res);
         });
 };
+
+// Fetch items fromMYSQL
+export const fetchItemCollection = ({ commit }, champion) => {
+    let championName = champion.toLowerCase();
+
+    async function getItemCollection() {
+        const response = await axios.get(`/api/${championName}`);
+        console.log(response);
+        let data = response.data;
+
+        championName === "shen" && commit("SET_SHEN_COLLECTION", data);
+        championName === "yasuo" && commit("SET_YASUO_COLLECTION", data);
+        championName === "yone" && commit("SET_YONE_COLLECTION", data);
+    }
+
+    getItemCollection();
+};
+
+// clear champion items collection array
+export const clearChampionItemsCollections = ({ commit }) =>
+    commit("SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS");

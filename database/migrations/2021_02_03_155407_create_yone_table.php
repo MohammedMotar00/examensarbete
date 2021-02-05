@@ -16,7 +16,6 @@ class CreateYoneTable extends Migration
     Schema::create('yone', function (Blueprint $table) {
       $table->id();
       $table->timestamps();
-      $table->string('username');
       $table->string('title');
       $table->json('items');
     });

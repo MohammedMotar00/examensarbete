@@ -50,8 +50,15 @@ export const clearFullItems = ({ commit }) => commit("SET_CLEAR_FULL_ITEMS");
 
 // Save to DB
 // export const saveItemsToDB = ({ commit }) => commit("SAVE_ITEMS_TO_DB");
-export const saveItemsToDB = ({ commit }, value) => {
-    axios.post("/api/shen", { title: value }).then(res => {
-        console.log(res);
-    });
+export const saveItemsToDB = ({ commit, getters }, value) => {
+    let items = getters.getAllItems;
+
+    axios
+        .post("/api/items/shen", {
+            title: value,
+            items
+        })
+        .then(res => {
+            console.log(res);
+        });
 };

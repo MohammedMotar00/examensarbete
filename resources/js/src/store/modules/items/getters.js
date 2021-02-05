@@ -21,8 +21,5 @@ export const getAllItems = state => {
     const full = state.fullItems[0];
     const arr = [];
     arr.push({ starting, middle, full });
-    // arr.push(starting);
-    // arr.push(middle);
-    // arr.push(full);
     return arr[0];
 };

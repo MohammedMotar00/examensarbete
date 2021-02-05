@@ -67787,9 +67787,12 @@ var clearFullItems = function clearFullItems(_ref9) {
 // export const saveItemsToDB = ({ commit }) => commit("SAVE_ITEMS_TO_DB");
 
 var saveItemsToDB = function saveItemsToDB(_ref10, value) {
-  var commit = _ref10.commit;
-  axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/shen", {
-    title: value
+  var commit = _ref10.commit,
+      getters = _ref10.getters;
+  var items = getters.getAllItems;
+  axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/items/shen", {
+    title: value,
+    items: items
   }).then(function (res) {
     console.log(res);
   });
@@ -67849,10 +67852,7 @@ var getAllItems = function getAllItems(state) {
     starting: starting,
     middle: middle,
     full: full
-  }); // arr.push(starting);
-  // arr.push(middle);
-  // arr.push(full);
-
+  });
   return arr[0];
 };
 

@@ -19,4 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::post('/shen', [ShenController::class, 'store'])->middleware('throttle:1000,1');
+Route::prefix('/items')->group(function () {
+  Route::post('/shen', [ShenController::class, 'store'])->middleware('throttle:1000,1');
+});

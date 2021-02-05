@@ -12,9 +12,13 @@ class ShenController extends Controller
 
   public function store(Request $request)
   {
-    $shen = new Shen;
-    $shen->title = $request['title'];
+    $shen = new Shen();
+    // $shen->title = $request['title'];
+    $shen->title = $request->title;
+    $shen->items = $request->items;
+    // $shen->items = $request->items['starting'];
+    $shen->save();
 
-    return $shen;
+    return response()->json($shen);
   }
 }

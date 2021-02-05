@@ -16,7 +16,8 @@ class CreateShenTable extends Migration
     Schema::create('shen', function (Blueprint $table) {
       $table->id();
       $table->timestamps();
-      $table->string('username');
+      // $table->timestamp('created_at')->nullable();
+      // $table->string('username');
       $table->string('title');
       $table->json('items');
     });

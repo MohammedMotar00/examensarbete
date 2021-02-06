@@ -24,4 +24,11 @@ class YasuoController extends Controller
 
     return response()->json($yasuo);
   }
+
+  public function show($id)
+  {
+    $yasuo = Yasuo::findOrFail($id);
+
+    return response()->json($yasuo);
+  }
 }

@@ -25,4 +25,11 @@ class YoneController extends Controller
 
     return response()->json($yone);
   }
+
+  public function show($id)
+  {
+    $yone = Yone::findOrFail($id);
+
+    return response()->json($yone);
+  }
 }

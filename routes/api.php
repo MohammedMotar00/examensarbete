@@ -34,4 +34,7 @@ Route::prefix('/items')->group(function () {
   Route::post('/yone', [YoneController::class, 'store'])->middleware('throttle:1000,1');
 
   // get items for specific champion
+  Route::get('/shen/{id}', [ShenController::class, 'show'])->middleware("throttle:1000,1");
+  Route::get('/yasuo/{id}', [YasuoController::class, 'show'])->middleware("throttle:1000,1");
+  Route::get('/yone/{id}', [YoneController::class, 'show'])->middleware("throttle:1000,1");
 });

@@ -84,3 +84,23 @@ export const fetchItemCollection = ({ commit }, champion) => {
 // clear champion items collection array
 export const clearChampionItemsCollections = ({ commit }) =>
     commit("SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS");
+
+// get single champion items collection from MYSQL
+export const fetchSingleChampionItemsCollection = ({ commit }, value) => {
+    // let value =data
+    async function getData() {
+        const response = await axios(
+            `/api/items/${value.championName}/${value.id}`
+        );
+
+        let data = response.data.items;
+
+        commit("SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION", data);
+    }
+
+    getData();
+};
+
+// clear singleChampionItemsCollection
+export const clearSingleChampionItemsCollection = ({ commit }) =>
+    commit("SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION");

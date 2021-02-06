@@ -32,15 +32,24 @@
       <v-row class="d-flex flex-wrap">
         <v-col class="d-flex flex-wrap justify-center">
           <div v-if="championName === 'Shen'">
-            <ItemCollection :itemCollections="getShenItemsCollection" />
+            <ItemCollection
+              :itemCollections="getShenItemsCollection"
+              :championName="championName"
+            />
           </div>
 
           <div v-if="championName === 'Yasuo'">
-            <ItemCollection :itemCollections="getYasuoItemsCollection" />
+            <ItemCollection
+              :itemCollections="getYasuoItemsCollection"
+              :championName="championName"
+            />
           </div>
 
           <div v-if="championName === 'Yone'">
-            <ItemCollection :itemCollections="getYoneItemsCollection" />
+            <ItemCollection
+              :itemCollections="getYoneItemsCollection"
+              :championName="championName"
+            />
           </div>
         </v-col>
       </v-row>
@@ -49,7 +58,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import ChampionInfo from "../components/ChampionInfo";
 import ItemCollection from "../components/ItemCollection";
 
@@ -70,6 +79,18 @@ export default {
       "getYasuoItemsCollection",
       "getYoneItemsCollection",
     ]),
+  },
+
+  methods: {
+    ...mapActions("items", ["clearSingleChampionItemsCollection"]),
+
+    clearItems() {
+      this.clearSingleChampionItemsCollection();
+    },
+  },
+
+  mounted() {
+    // this.clearItems();
   },
 };
 </script>

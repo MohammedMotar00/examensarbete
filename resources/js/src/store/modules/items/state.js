@@ -10,5 +10,8 @@ export default {
     // get champion items collections from MYSQL
     shenItemsCollection: [],
     yasuoItemsCollection: [],
-    yoneItemsCollection: []
+    yoneItemsCollection: [],
+
+    // get single items collection for champion
+    singleChampionItemsCollection: []
 };

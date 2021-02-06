@@ -27,3 +27,13 @@ export const getAllItems = state => {
 export const getShenItemsCollection = state => state.shenItemsCollection[0];
 export const getYasuoItemsCollection = state => state.yasuoItemsCollection[0];
 export const getYoneItemsCollection = state => state.yoneItemsCollection[0];
+
+// Get single champion items collection
+export const getSingleChampionItemsCollection_Starting = state =>
+    state.singleChampionItemsCollection[0];
+
+export const getSingleChampionItemsCollection_Middle = state =>
+    state.singleChampionItemsCollection[0].middle;
+
+export const getSingleChampionItemsCollection_Full = state =>
+    state.singleChampionItemsCollection[0].full;

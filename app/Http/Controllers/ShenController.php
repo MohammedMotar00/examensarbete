@@ -26,4 +26,11 @@ class ShenController extends Controller
 
     return response()->json($shen);
   }
+
+  public function show($id)
+  {
+    $shen = Shen::findOrFail($id);
+
+    return response()->json($shen);
+  }
 }

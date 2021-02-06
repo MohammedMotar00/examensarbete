@@ -36,7 +36,7 @@ export default new VueRouter({
             component: AddItemsPage
         },
         {
-            path: "/viewitems_page/:item_collection_info",
+            path: "/viewitems_page/:item_collection_title_name_id",
             name: "ViewItemsPage",
             component: ViewItemsPage
         }

@@ -44,3 +44,15 @@ export const SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS = state => {
     state.yasuoItemsCollection = [];
     state.yoneItemsCollection = [];
 };
+
+// Save single champion items collection
+// export const SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = (state, items) =>
+//     state.singleChampionItemsCollection.push(items);
+
+export const SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = (state, items) => {
+    state.singleChampionItemsCollection.push(items.full);
+};
+
+// Clear singleChampionItemsCollection
+export const SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION = state =>
+    (state.singleChampionItemsCollection = []);

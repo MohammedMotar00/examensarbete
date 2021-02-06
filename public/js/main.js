@@ -2475,9 +2475,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.pickChampionName(null);
   },
-  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("items", ["pickChampionName"])), {}, {
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("items", ["pickChampionName", "saveChampionImage"])), {}, {
     pickChampion: function pickChampion(name) {
       this.pickChampionName(name);
+      if (name === "Shen") this.saveChampionImage("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_0.jpg");
+      if (name === "Yasuo") this.saveChampionImage("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_0.jpg");
+      if (name === "Yone") this.saveChampionImage("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yone_0.jpg");
     }
   })
 });
@@ -2701,16 +2704,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ["itemCollections", "championName"],
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])("items", ["fetchSingleChampionItemsCollection"])), {}, {
     fetchItems: function fetchItems(id) {
-      console.log("this is id: ", id);
       var championName = this.championName.toLowerCase();
       this.fetchSingleChampionItemsCollection({
         championName: championName,
         id: id
-      }); // this.$router.push({
-      //   name: "ViewItemsPage",
-      //   params: { item_collection_title_name_id: id },
-      // });
-
+      });
       this.$router.replace({
         name: "ViewItemsPage",
         params: {
@@ -2735,13 +2733,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2757,15 +2748,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["title"],
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("items", ["getSingleChampionItemsCollection_Starting", "getSingleChampionItemsCollection_Middle", "getSingleChampionItemsCollection_Full"]))
+  props: ["title", "items"]
 });
 
 /***/ }),
@@ -2973,7 +2957,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.clearSingleChampionItemsCollection();
     }
   }),
-  mounted: function mounted() {// this.clearItems();
+  mounted: function mounted() {
+    this.clearItems();
   }
 });
 
@@ -3130,6 +3115,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 // import { mapGetters } from "vuex";
 
 
@@ -3156,14 +3145,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   mounted: function mounted() {
     this.fetchItems();
-  } // computed: {
-  //   ...mapGetters("items", [
-  //     "getSingleChampionItemsCollection_Starting",
-  //     "getSingleChampionItemsCollection_Middle",
-  //     "getSingleChampionItemsCollection_Full",
-  //   ]),
-  // },
-
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])("items", ["getSingleChampionItemsCollection_Starting", "getSingleChampionItemsCollection_Middle", "getSingleChampionItemsCollection_Full", "getSingleChampionImageCollection"]))
 });
 
 /***/ }),
@@ -6290,40 +6273,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "d-flex px-2" }, [
-    _c("h2", [_vm._v(_vm._s(_vm.title))]),
-    _vm._v(" "),
-    _vm.title === "Starting Items"
-      ? _c(
+  return _c(
+    "div",
+    { staticClass: "d-flex px-2" },
+    [
+      _c("h2", [_vm._v(_vm._s(_vm.title))]),
+      _vm._v(" "),
+      _vm._l(_vm.items, function(item, index) {
+        return _c(
           "div",
-          _vm._l(_vm.getSingleChampionItemsCollection_Starting, function(
-            item,
-            index
-          ) {
-            return _c(
-              "div",
-              { key: index },
-              [
-                _c("v-img", {
-                  staticClass: "ma-auto",
-                  attrs: {
-                    height: "50",
-                    width: "50",
-                    src:
-                      "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
-                      item.image
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(item.name))])
-              ],
-              1
-            )
-          }),
-          0
+          { key: index },
+          [
+            _c("v-img", {
+              staticClass: "ma-auto",
+              attrs: {
+                height: "50",
+                width: "50",
+                src:
+                  "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
+                  item.image
+              }
+            }),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(item.name))])
+          ],
+          1
         )
-      : _vm._e()
-  ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -6834,7 +6813,19 @@ var render = function() {
               _c(
                 "v-col",
                 { attrs: { cols: "12", sm: "6", md: "3", xl: "2" } },
-                [_vm._v("\n        här ska jag ha bild för champion!\n      ")]
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { color: "grey lighten-4" } },
+                    [
+                      _c("v-img", {
+                        attrs: { src: _vm.getSingleChampionImageCollection }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
               )
             ],
             1
@@ -6848,21 +6839,42 @@ var render = function() {
               _c(
                 "v-col",
                 { attrs: { cols: "12" } },
-                [_c("ShowItems", { attrs: { title: "Starting Items" } })],
+                [
+                  _c("ShowItems", {
+                    attrs: {
+                      title: "Starting Items",
+                      items: _vm.getSingleChampionItemsCollection_Starting
+                    }
+                  })
+                ],
                 1
               ),
               _vm._v(" "),
               _c(
                 "v-col",
                 { attrs: { cols: "12" } },
-                [_c("ShowItems", { attrs: { title: "Middle Items" } })],
+                [
+                  _c("ShowItems", {
+                    attrs: {
+                      title: "Middle Items",
+                      items: _vm.getSingleChampionItemsCollection_Middle
+                    }
+                  })
+                ],
                 1
               ),
               _vm._v(" "),
               _c(
                 "v-col",
                 { attrs: { cols: "12" } },
-                [_c("ShowItems", { attrs: { title: "Full Items" } })],
+                [
+                  _c("ShowItems", {
+                    attrs: {
+                      title: "Full Items",
+                      items: _vm.getSingleChampionItemsCollection_Full
+                    }
+                  })
+                ],
                 1
               )
             ],
@@ -69245,12 +69257,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/src/store/modules/items/actions.js ***!
   \*********************************************************/
-/*! exports provided: pickChampionName, fetchItems, searchForItems, saveStartingItems, saveMiddleItems, saveFullItems, clearStartingItems, clearMiddleItems, clearFullItems, saveItemsToDB, fetchItemCollection, clearChampionItemsCollections, fetchSingleChampionItemsCollection, clearSingleChampionItemsCollection */
+/*! exports provided: pickChampionName, saveChampionImage, fetchItems, searchForItems, saveStartingItems, saveMiddleItems, saveFullItems, clearStartingItems, clearMiddleItems, clearFullItems, saveItemsToDB, fetchItemCollection, clearChampionItemsCollections, fetchSingleChampionItemsCollection, clearSingleChampionItemsCollection */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pickChampionName", function() { return pickChampionName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveChampionImage", function() { return saveChampionImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return fetchItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchForItems", function() { return searchForItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveStartingItems", function() { return saveStartingItems; });
@@ -69292,9 +69305,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var pickChampionName = function pickChampionName(_ref, pickedChampion) {
   var commit = _ref.commit;
   commit("SET_PICKED_CHAMPION", pickedChampion);
-};
-var fetchItems = function fetchItems(_ref2) {
+}; // saves champion image to store when user oicks champion for the build
+
+var saveChampionImage = function saveChampionImage(_ref2, image) {
   var commit = _ref2.commit;
+  commit("SET_CHAMPION_IMAGE", image);
+};
+var fetchItems = function fetchItems(_ref3) {
+  var commit = _ref3.commit;
   _apis_items__WEBPACK_IMPORTED_MODULE_1__["default"].items().then(function (res) {
     var items = [];
     var data = res.data.data;
@@ -69310,8 +69328,8 @@ var fetchItems = function fetchItems(_ref2) {
     commit("SET_ITEMS", items);
   });
 };
-var searchForItems = function searchForItems(_ref3, payload) {
-  var commit = _ref3.commit;
+var searchForItems = function searchForItems(_ref4, payload) {
+  var commit = _ref4.commit;
   console.log(payload);
   commit("SET_FILTER_ITEMS", payload);
 }; // export const saveAllItems = ({ commit }, items) => {
@@ -69319,47 +69337,49 @@ var searchForItems = function searchForItems(_ref3, payload) {
 //     commit("SET_SAVE_ALL_ITEMS", items);
 // };
 
-var saveStartingItems = function saveStartingItems(_ref4, items) {
-  var commit = _ref4.commit;
+var saveStartingItems = function saveStartingItems(_ref5, items) {
+  var commit = _ref5.commit;
   commit("SET_SAVE_STARTING_ITEMS", items);
 };
-var saveMiddleItems = function saveMiddleItems(_ref5, items) {
-  var commit = _ref5.commit;
+var saveMiddleItems = function saveMiddleItems(_ref6, items) {
+  var commit = _ref6.commit;
   commit("SET_SAVE_MIDDLE_ITEMS", items);
 };
-var saveFullItems = function saveFullItems(_ref6, items) {
-  var commit = _ref6.commit;
+var saveFullItems = function saveFullItems(_ref7, items) {
+  var commit = _ref7.commit;
   commit("SET_SAVE_FULL_ITEMS", items);
 }; // clear starting, middle and full items
 
-var clearStartingItems = function clearStartingItems(_ref7) {
-  var commit = _ref7.commit;
+var clearStartingItems = function clearStartingItems(_ref8) {
+  var commit = _ref8.commit;
   return commit("SET_CLEAR_STARTING_ITEMS");
 };
-var clearMiddleItems = function clearMiddleItems(_ref8) {
-  var commit = _ref8.commit;
+var clearMiddleItems = function clearMiddleItems(_ref9) {
+  var commit = _ref9.commit;
   return commit("SET_CLEAR_MIDDLE_ITEMS");
 };
-var clearFullItems = function clearFullItems(_ref9) {
-  var commit = _ref9.commit;
+var clearFullItems = function clearFullItems(_ref10) {
+  var commit = _ref10.commit;
   return commit("SET_CLEAR_FULL_ITEMS");
 }; // Save to DB
 // export const saveItemsToDB = ({ commit }) => commit("SAVE_ITEMS_TO_DB");
 
-var saveItemsToDB = function saveItemsToDB(_ref10, collectionTitle) {
-  var getters = _ref10.getters;
+var saveItemsToDB = function saveItemsToDB(_ref11, collectionTitle) {
+  var getters = _ref11.getters;
   var items = getters.getAllItems;
   var pickedChamp = getters.getPickedChampionName.toLowerCase();
+  var championImage = getters.getChampionImage;
   axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("api/items/".concat(pickedChamp), {
     title: collectionTitle,
-    items: items
+    items: items,
+    image: championImage
   }).then(function (res) {
     console.log(res);
   });
 }; // Fetch items fromMYSQL
 
-var fetchItemCollection = function fetchItemCollection(_ref11, champion) {
-  var commit = _ref11.commit;
+var fetchItemCollection = function fetchItemCollection(_ref12, champion) {
+  var commit = _ref12.commit;
   var championName = champion.toLowerCase();
 
   function getItemCollection() {
@@ -69397,13 +69417,13 @@ var fetchItemCollection = function fetchItemCollection(_ref11, champion) {
   getItemCollection();
 }; // clear champion items collection array
 
-var clearChampionItemsCollections = function clearChampionItemsCollections(_ref12) {
-  var commit = _ref12.commit;
+var clearChampionItemsCollections = function clearChampionItemsCollections(_ref13) {
+  var commit = _ref13.commit;
   return commit("SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS");
 }; // get single champion items collection from MYSQL
 
-var fetchSingleChampionItemsCollection = function fetchSingleChampionItemsCollection(_ref13, value) {
-  var commit = _ref13.commit;
+var fetchSingleChampionItemsCollection = function fetchSingleChampionItemsCollection(_ref14, value) {
+  var commit = _ref14.commit;
 
   // let value =data
   function getData() {
@@ -69422,7 +69442,8 @@ var fetchSingleChampionItemsCollection = function fetchSingleChampionItemsCollec
 
             case 2:
               response = _context2.sent;
-              data = response.data.items;
+              data = response.data; // console.log(response.data);
+
               commit("SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION", data);
 
             case 5:
@@ -69438,8 +69459,8 @@ var fetchSingleChampionItemsCollection = function fetchSingleChampionItemsCollec
   getData();
 }; // clear singleChampionItemsCollection
 
-var clearSingleChampionItemsCollection = function clearSingleChampionItemsCollection(_ref14) {
-  var commit = _ref14.commit;
+var clearSingleChampionItemsCollection = function clearSingleChampionItemsCollection(_ref15) {
+  var commit = _ref15.commit;
   return commit("SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION");
 };
 
@@ -69449,12 +69470,13 @@ var clearSingleChampionItemsCollection = function clearSingleChampionItemsCollec
 /*!*********************************************************!*\
   !*** ./resources/js/src/store/modules/items/getters.js ***!
   \*********************************************************/
-/*! exports provided: getPickedChampionName, getItems, filterSearchItems, getStartingItems, getMiddleItems, getFullItems, getAllItems, getShenItemsCollection, getYasuoItemsCollection, getYoneItemsCollection, getSingleChampionItemsCollection_Starting, getSingleChampionItemsCollection_Middle, getSingleChampionItemsCollection_Full */
+/*! exports provided: getPickedChampionName, getChampionImage, getItems, filterSearchItems, getStartingItems, getMiddleItems, getFullItems, getAllItems, getShenItemsCollection, getYasuoItemsCollection, getYoneItemsCollection, getSingleChampionItemsCollection_Starting, getSingleChampionItemsCollection_Middle, getSingleChampionItemsCollection_Full, getSingleChampionImageCollection */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPickedChampionName", function() { return getPickedChampionName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChampionImage", function() { return getChampionImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterSearchItems", function() { return filterSearchItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStartingItems", function() { return getStartingItems; });
@@ -69467,8 +69489,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSingleChampionItemsCollection_Starting", function() { return getSingleChampionItemsCollection_Starting; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSingleChampionItemsCollection_Middle", function() { return getSingleChampionItemsCollection_Middle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSingleChampionItemsCollection_Full", function() { return getSingleChampionItemsCollection_Full; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSingleChampionImageCollection", function() { return getSingleChampionImageCollection; });
 var getPickedChampionName = function getPickedChampionName(state) {
   return state.pickedChampionName;
+};
+var getChampionImage = function getChampionImage(state) {
+  return state.championImage;
 };
 var getItems = function getItems(state) {
   return state.items[0];
@@ -69517,13 +69543,22 @@ var getYoneItemsCollection = function getYoneItemsCollection(state) {
 }; // Get single champion items collection
 
 var getSingleChampionItemsCollection_Starting = function getSingleChampionItemsCollection_Starting(state) {
-  return state.singleChampionItemsCollection[0];
+  var _state$singleChampion;
+
+  return (_state$singleChampion = state.singleChampionItemsCollection[0]) === null || _state$singleChampion === void 0 ? void 0 : _state$singleChampion.starting;
 };
 var getSingleChampionItemsCollection_Middle = function getSingleChampionItemsCollection_Middle(state) {
-  return state.singleChampionItemsCollection[0].middle;
+  var _state$singleChampion2;
+
+  return (_state$singleChampion2 = state.singleChampionItemsCollection[0]) === null || _state$singleChampion2 === void 0 ? void 0 : _state$singleChampion2.middle;
 };
 var getSingleChampionItemsCollection_Full = function getSingleChampionItemsCollection_Full(state) {
-  return state.singleChampionItemsCollection[0].full;
+  var _state$singleChampion3;
+
+  return (_state$singleChampion3 = state.singleChampionItemsCollection[0]) === null || _state$singleChampion3 === void 0 ? void 0 : _state$singleChampion3.full;
+};
+var getSingleChampionImageCollection = function getSingleChampionImageCollection(state) {
+  return state.championItemPageImage;
 };
 
 /***/ }),
@@ -69559,12 +69594,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************************!*\
   !*** ./resources/js/src/store/modules/items/mutations.js ***!
   \***********************************************************/
-/*! exports provided: SET_PICKED_CHAMPION, SET_ITEMS, SET_FILTER_ITEMS, SET_SAVE_STARTING_ITEMS, SET_SAVE_MIDDLE_ITEMS, SET_SAVE_FULL_ITEMS, SET_CLEAR_STARTING_ITEMS, SET_CLEAR_MIDDLE_ITEMS, SET_CLEAR_FULL_ITEMS, SET_SHEN_COLLECTION, SET_YASUO_COLLECTION, SET_YONE_COLLECTION, SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS, SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION, SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION */
+/*! exports provided: SET_PICKED_CHAMPION, SET_CHAMPION_IMAGE, SET_ITEMS, SET_FILTER_ITEMS, SET_SAVE_STARTING_ITEMS, SET_SAVE_MIDDLE_ITEMS, SET_SAVE_FULL_ITEMS, SET_CLEAR_STARTING_ITEMS, SET_CLEAR_MIDDLE_ITEMS, SET_CLEAR_FULL_ITEMS, SET_SHEN_COLLECTION, SET_YASUO_COLLECTION, SET_YONE_COLLECTION, SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS, SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION, SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_PICKED_CHAMPION", function() { return SET_PICKED_CHAMPION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_CHAMPION_IMAGE", function() { return SET_CHAMPION_IMAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_ITEMS", function() { return SET_ITEMS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_FILTER_ITEMS", function() { return SET_FILTER_ITEMS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_SAVE_STARTING_ITEMS", function() { return SET_SAVE_STARTING_ITEMS; });
@@ -69581,6 +69617,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION", function() { return SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION; });
 var SET_PICKED_CHAMPION = function SET_PICKED_CHAMPION(state, data) {
   state.pickedChampionName = data;
+};
+var SET_CHAMPION_IMAGE = function SET_CHAMPION_IMAGE(state, image) {
+  return state.championImage = image;
 };
 var SET_ITEMS = function SET_ITEMS(state, data) {
   state.items.push(data);
@@ -69626,12 +69665,16 @@ var SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS = function SET_CLEAR_CHAMPION_ITEMS_COL
 // export const SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = (state, items) =>
 //     state.singleChampionItemsCollection.push(items);
 
-var SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = function SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION(state, items) {
-  state.singleChampionItemsCollection.push(items.full);
+var SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = function SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION(state, data) {
+  var items = data.items;
+  var image = data.image;
+  state.singleChampionItemsCollection.push(items);
+  state.championItemPageImage = image;
 }; // Clear singleChampionItemsCollection
 
 var SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION = function SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION(state) {
-  return state.singleChampionItemsCollection = [];
+  state.singleChampionItemsCollection = [];
+  state.championItemPageImage = "";
 };
 
 /***/ }),
@@ -69647,6 +69690,8 @@ var SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION = function SET_CLEAR_SINGLE_CHAMP
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   pickedChampionName: "",
+  championImage: "",
+  championItemPageImage: "",
   items: [],
   searchForItem: "",
   allItems: [],

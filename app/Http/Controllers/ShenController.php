@@ -13,6 +13,7 @@ class ShenController extends Controller
     $shen = new Shen();
     // $shen->title = $request['title'];
     $shen->title = $request->title;
+    $shen->image = $request->image;
     $shen->items = $request->items;
     // $shen->items = $request->items['starting'];
     $shen->save();

@@ -9,7 +9,7 @@ class Yone extends Model
 {
   use HasFactory;
   protected $table = 'yone';
-  protected $fillable = ['username', 'title', 'items'];
+  protected $fillable = ['username', 'title', 'items', 'image'];
   protected $casts = [
     'items' => 'array'
   ];

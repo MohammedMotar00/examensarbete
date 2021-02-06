@@ -2,6 +2,9 @@ export const SET_PICKED_CHAMPION = (state, data) => {
     state.pickedChampionName = data;
 };
 
+export const SET_CHAMPION_IMAGE = (state, image) =>
+    (state.championImage = image);
+
 export const SET_ITEMS = (state, data) => {
     state.items.push(data);
 };
@@ -49,10 +52,15 @@ export const SET_CLEAR_CHAMPION_ITEMS_COLLECTIONS = state => {
 // export const SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = (state, items) =>
 //     state.singleChampionItemsCollection.push(items);
 
-export const SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = (state, items) => {
-    state.singleChampionItemsCollection.push(items.full);
+export const SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION = (state, data) => {
+    let items = data.items;
+    let image = data.image;
+    state.singleChampionItemsCollection.push(items);
+    state.championItemPageImage = image;
 };
 
 // Clear singleChampionItemsCollection
-export const SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION = state =>
-    (state.singleChampionItemsCollection = []);
+export const SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION = state => {
+    state.singleChampionItemsCollection = [];
+    state.championItemPageImage = "";
+};

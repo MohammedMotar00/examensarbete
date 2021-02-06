@@ -10,7 +10,7 @@ class Shen extends Model
   // use HasFactory;
 
   protected $table = 'shen';
-  protected $fillable = ['username', 'title', 'items'];
+  protected $fillable = ['username', 'title', 'items', 'image'];
   protected $casts = [
     'items' => 'array'
   ];

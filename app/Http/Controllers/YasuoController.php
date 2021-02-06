@@ -12,6 +12,7 @@ class YasuoController extends Controller
   {
     $yasuo = new Yasuo();
     $yasuo->title = $request->title;
+    $yasuo->image = $request->image;
     $yasuo->items = $request->items;
     $yasuo->save();
 

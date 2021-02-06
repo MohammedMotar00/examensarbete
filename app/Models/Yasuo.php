@@ -9,7 +9,7 @@ class Yasuo extends Model
 {
   use HasFactory;
   protected $table = 'yasuo';
-  protected $fillable = ['username', 'title', 'items'];
+  protected $fillable = ['username', 'title', 'items', 'image'];
   protected $casts = [
     'items' => 'array'
   ];

@@ -53,10 +53,25 @@ export default {
   },
 
   methods: {
-    ...mapActions("items", ["pickChampionName"]),
+    ...mapActions("items", ["pickChampionName", "saveChampionImage"]),
 
     pickChampion(name) {
       this.pickChampionName(name);
+
+      if (name === "Shen")
+        this.saveChampionImage(
+          "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Shen_0.jpg"
+        );
+
+      if (name === "Yasuo")
+        this.saveChampionImage(
+          "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_0.jpg"
+        );
+
+      if (name === "Yone")
+        this.saveChampionImage(
+          "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yone_0.jpg"
+        );
     },
   },
 };

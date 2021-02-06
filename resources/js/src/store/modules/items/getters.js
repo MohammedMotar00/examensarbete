@@ -1,5 +1,7 @@
 export const getPickedChampionName = state => state.pickedChampionName;
 
+export const getChampionImage = state => state.championImage;
+
 export const getItems = state => state.items[0];
 
 export const filterSearchItems = state => {
@@ -30,10 +32,13 @@ export const getYoneItemsCollection = state => state.yoneItemsCollection[0];
 
 // Get single champion items collection
 export const getSingleChampionItemsCollection_Starting = state =>
-    state.singleChampionItemsCollection[0];
+    state.singleChampionItemsCollection[0]?.starting;
 
 export const getSingleChampionItemsCollection_Middle = state =>
-    state.singleChampionItemsCollection[0].middle;
+    state.singleChampionItemsCollection[0]?.middle;
 
 export const getSingleChampionItemsCollection_Full = state =>
-    state.singleChampionItemsCollection[0].full;
+    state.singleChampionItemsCollection[0]?.full;
+
+export const getSingleChampionImageCollection = state =>
+    state.championItemPageImage;

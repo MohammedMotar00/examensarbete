@@ -13,6 +13,7 @@ class YoneController extends Controller
   {
     $yone = new Yone();
     $yone->title = $request->title;
+    $yone->image = $request->image;
     $yone->items = $request->items;
     $yone->save();
 

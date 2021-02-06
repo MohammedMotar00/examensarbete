@@ -5,6 +5,11 @@ export const pickChampionName = ({ commit }, pickedChampion) => {
     commit("SET_PICKED_CHAMPION", pickedChampion);
 };
 
+// saves champion image to store when user oicks champion for the build
+export const saveChampionImage = ({ commit }, image) => {
+    commit("SET_CHAMPION_IMAGE", image);
+};
+
 export const fetchItems = ({ commit }) => {
     items.items().then(res => {
         let items = [];
@@ -53,11 +58,13 @@ export const clearFullItems = ({ commit }) => commit("SET_CLEAR_FULL_ITEMS");
 export const saveItemsToDB = ({ getters }, collectionTitle) => {
     let items = getters.getAllItems;
     let pickedChamp = getters.getPickedChampionName.toLowerCase();
+    let championImage = getters.getChampionImage;
 
     axios
         .post(`api/items/${pickedChamp}`, {
             title: collectionTitle,
-            items
+            items,
+            image: championImage
         })
         .then(res => {
             console.log(res);
@@ -93,7 +100,8 @@ export const fetchSingleChampionItemsCollection = ({ commit }, value) => {
             `/api/items/${value.championName}/${value.id}`
         );
 
-        let data = response.data.items;
+        let data = response.data;
+        // console.log(response.data);
 
         commit("SET_SAVE_SINGLE_CHAMPION_ITEMS_COLLECTION", data);
     }

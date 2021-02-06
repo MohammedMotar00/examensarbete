@@ -17,6 +17,7 @@ class CreateYoneTable extends Migration
       $table->id();
       $table->timestamps();
       $table->string('title');
+      $table->string('image');
       $table->json('items');
     });
   }

@@ -1,5 +1,7 @@
 export default {
     pickedChampionName: "",
+    championImage: "",
+    championItemPageImage: "",
     items: [],
     searchForItem: "",
     allItems: [],

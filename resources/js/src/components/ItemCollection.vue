@@ -32,13 +32,8 @@ export default {
     ...mapActions("items", ["fetchSingleChampionItemsCollection"]),
 
     fetchItems(id) {
-      console.log("this is id: ", id);
       const championName = this.championName.toLowerCase();
       this.fetchSingleChampionItemsCollection({ championName, id });
-      // this.$router.push({
-      //   name: "ViewItemsPage",
-      //   params: { item_collection_title_name_id: id },
-      // });
 
       this.$router.replace({
         name: "ViewItemsPage",

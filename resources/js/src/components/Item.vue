@@ -1,8 +1,12 @@
 <template>
-  <div class="item" @click="addItem(itemInfo.name)">
-    <v-img height="50" width="50" :src="image" class="ma-auto" />
-    <p>{{ itemInfo.name }}</p>
-    <p>{{ title }}</p>
+  <div class="remove-item" @click="removeItem(title, index)">
+    <v-img
+      height="50"
+      width="50"
+      :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image}`"
+      class="ma-auto"
+    />
+    <p>{{ item.name }}</p>
   </div>
 </template>
 
@@ -10,7 +14,7 @@
 import { mapActions } from "vuex";
 
 export default {
-  props: ["image", "itemInfo", "title"],
+  props: ["removeItem", "item", "title", "index"],
 
   data() {
     return {
@@ -19,32 +23,19 @@ export default {
     };
   },
 
-  methods: {
-    addItem(item) {
-      // if (this.items.length)
-      // let arr = [];
-      let obj = {};
-      obj.name = item;
-      this.items.push(obj);
-      // arr.push(item);
-      console.log(obj);
-      // this.items.push(item);
-      this.itemObj = item;
+  methods: {},
 
-      // this.itemCheck();
-    },
-
-    itemCheck() {
-      console.log(this.items);
-      console.log(this.items.length);
-    },
-  },
-
-  mounted() {
-    // this.itemCheck();
-  },
+  mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
+.remove-item {
+  cursor: pointer;
+  opacity: 1;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
 </style>

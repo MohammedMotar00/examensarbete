@@ -1,11 +1,54 @@
 <template>
   <v-col cols="12">
     <p>{{ title }}</p>
-    <!-- <v-icon class="add-icon" x-large>mdi-plus-box</v-icon> -->
 
     <!-- items that has been added -->
     <v-row>
-      <AddedItems :title="title" />
+      <div class="d-flex flex-row" v-if="title === 'Starting Items'">
+        <div
+          class="d-flex flex-column align-center"
+          v-for="(item, index) in startingItems"
+          :key="index"
+        >
+          <Item
+            :item="item"
+            :title="title"
+            :removeItem="removeItem"
+            :index="index"
+          />
+        </div>
+      </div>
+
+      <div class="d-flex flex-row" v-if="title === 'Middle Items'">
+        <div
+          class="d-flex flex-column align-center"
+          v-for="(item, index) in middleItems"
+          :key="index"
+        >
+          <Item
+            :item="item"
+            :title="title"
+            :removeItem="removeItem"
+            :index="index"
+          />
+        </div>
+      </div>
+
+      <div class="d-flex flex-row" v-if="title === 'Full Items'">
+        <div
+          class="d-flex flex-column align-center"
+          v-for="(item, index) in fullItems"
+          :key="index"
+        >
+          <Item
+            :item="item"
+            :title="title"
+            :removeItem="removeItem"
+            :index="index"
+          />
+        </div>
+      </div>
+
       <v-dialog
         transition="dialog-top-transition"
         max-width="600"
@@ -40,7 +83,6 @@
                 </div>
               </v-toolbar>
 
-              <!-- <div class="d-flex"> -->
               <v-row
                 class="justify-center flex-wrap justify-space-around mt-2 ma-auto"
                 style="width: 100%"
@@ -53,14 +95,16 @@
                   style="border: 1px solid blue"
                   class="text-center d-flex align-center justify-center"
                 >
-                  <!-- <Item
-                  :image="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
-                  :itemInfo="item"
-                  :title="title"
-                /> -->
                   <div
                     class="item"
-                    @click="addItem(item.name, item.image.full, title)"
+                    @click="
+                      addItem(
+                        item.name,
+                        item.image.full,
+                        item.description,
+                        title
+                      )
+                    "
                   >
                     <v-img
                       height="50"
@@ -74,19 +118,55 @@
               </v-row>
 
               <div class="toolbar-bottom">
-                <v-toolbar color="primary" dark style="height: 100px">
-                  <div v-if="title === 'Starting Items'">
-                    <div v-for="(item, index) in startingItems" :key="index">
-                      <v-img
-                        height="50"
-                        width="50"
-                        :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image}`"
-                        class="ma-auto"
+                <v-toolbar color="primary" dark style="min-height: 100px">
+                  <div
+                    class="d-flex flex-row"
+                    v-if="title === 'Starting Items'"
+                  >
+                    <div
+                      class="d-flex flex-column align-center"
+                      v-for="(item, index) in startingItems"
+                      :key="index"
+                    >
+                      <Item
+                        :item="item"
+                        :title="title"
+                        :removeItem="removeItem"
+                        :index="index"
                       />
-                      <p>{{ item.name }}</p>
                     </div>
                   </div>
-                  <v-btn @click="saveItems(title)" color="success">save</v-btn>
+
+                  <div class="d-flex flex-row" v-if="title === 'Middle Items'">
+                    <div
+                      class="d-flex flex-column align-center"
+                      v-for="(item, index) in middleItems"
+                      :key="index"
+                    >
+                      <Item
+                        :item="item"
+                        :title="title"
+                        :removeItem="removeItem"
+                        :index="index"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row" v-if="title === 'Full Items'">
+                    <div
+                      class="d-flex flex-column align-center"
+                      v-for="(item, index) in fullItems"
+                      :key="index"
+                    >
+                      <Item
+                        :item="item"
+                        :title="title"
+                        :removeItem="removeItem"
+                        :index="index"
+                      />
+                    </div>
+                  </div>
+                  <!-- <v-btn @click="saveItems(title)" color="success">save</v-btn> -->
                 </v-toolbar>
               </div>
             </div>
@@ -94,16 +174,6 @@
         </template>
       </v-dialog>
     </v-row>
-    <!-- {{ allItems }} -->
-    <div v-for="(item, index) in getStartingItems" :key="index">
-      <!-- <v-img
-        height="50"
-        width="50"
-        :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image}`"
-        class="ma-auto"
-      /> -->
-      <p>{{ item }}</p>
-    </div>
   </v-col>
 </template>
 
@@ -154,64 +224,58 @@ export default {
       this.searchForItems(event?.target?.value);
     },
 
-    addItem(name, image, title) {
+    addItem(name, image, description, itemTitle) {
       const key = Math.floor(Math.random() * 120);
       let id = null;
 
       if (key !== Math.floor(Math.random() * 120)) id = key;
 
-      // title === "Starting Items" && this.startingItems.push(item);
-      if (title === "Starting Items") {
+      if (itemTitle === "Starting Items") {
         if (this.startingItems.length <= 5) {
-          this.startingItems.push({ name, image, id });
+          this.startingItems.push({ name, image, description, id });
+          this.saveStartingItems(this.startingItems);
         }
       }
 
-      if (title === "Middle Items") {
+      if (itemTitle === "Middle Items") {
         if (this.middleItems.length <= 5) {
-          this.middleItems.push({ name, image, id });
+          this.middleItems.push({ name, image, description, id });
         }
       }
 
-      if (title === "Full Items") {
+      if (itemTitle === "Full Items") {
         if (this.fullItems.length <= 5) {
-          this.fullItems.push({ name, image, id });
+          this.fullItems.push({ name, image, description, id });
         }
       }
     },
 
-    saveItems(title) {
-      if (title === "Starting Items") {
-        this.saveStartingItems(this.startingItems);
-      }
+    // saveItems(title) {
+    //   if (title === "Starting Items") {
+    //     this.saveStartingItems(this.startingItems);
+    //   }
 
-      if (title === "Middle Items") {
-        this.saveMiddleItems(this.middleItems);
-      }
+    //   if (title === "Middle Items") {
+    //     this.saveMiddleItems(this.middleItems);
+    //   }
 
-      if (title === "Full Items") {
-        this.saveFullItems(this.fullItems);
-      }
-    },
-
-    // getItemsFromVuex() {
-    //   for (let item in this.getStartingItems) {
-    //     console.log(item);
-    //     this.startingItems.push(item);
+    //   if (title === "Full Items") {
+    //     this.saveFullItems(this.fullItems);
     //   }
     // },
 
-    openModal(title) {
-      // title === "Starting Items" && this.clearStartingItems();
-      // title === "Middle Items" && this.clearMiddleItems();
-      // title === "Full Items" && this.clearFullItems();
+    removeItem(itemTitle, index) {
+      console.log(itemTitle);
+      console.log(index);
+
+      itemTitle === "Starting Items" && this.$delete(this.startingItems, index);
+      itemTitle === "Middle Items" && this.$delete(this.middleItems, index);
+      itemTitle === "Full Items" && this.$delete(this.fullItems, index);
     },
   },
 
   mounted() {
     this.filterItems();
-    // console.log(this.allItems);
-    // this.getItemsFromVuex();
   },
 };
 </script>
@@ -222,7 +286,6 @@ export default {
   border: 1px solid red;
   min-height: 200px;
   width: 100%;
-  // overflow-x: hidden;
 }
 
 .toolbar-top {

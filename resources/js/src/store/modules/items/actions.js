@@ -15,6 +15,7 @@ export const fetchItems = ({ commit }) => {
         let items = [];
 
         const data = res.data.data;
+        console.log(res.data);
 
         for (const [key, value] of Object.entries(data)) {
             items.push(value);

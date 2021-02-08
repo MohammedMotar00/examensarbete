@@ -5,6 +5,7 @@ export const getChampionImage = state => state.championImage;
 export const getItems = state => state.items[0];
 
 export const filterSearchItems = state => {
+    console.log(state);
     let search = state.searchForItem;
     return state?.items[0]?.filter(item => {
         return item?.name?.toLowerCase()?.match(search?.toLowerCase());

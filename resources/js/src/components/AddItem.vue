@@ -55,13 +55,7 @@
         style="position: relative"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            @click="openModal(title)"
-            color="primary"
-            v-bind="attrs"
-            v-on="on"
-            >+</v-btn
-          >
+          <v-btn color="primary" v-bind="attrs" v-on="on">+</v-btn>
         </template>
 
         <template class="container-container">
@@ -117,13 +111,15 @@
                 </v-col>
               </v-row>
 
-              <div class="toolbar-bottom">
-                <v-toolbar color="primary" dark style="min-height: 100px">
-                  <div
-                    class="d-flex flex-row"
-                    v-if="title === 'Starting Items'"
-                  >
-                    <div
+              <div class="toolbar-bottom" style="border: 1px solid red">
+                <v-toolbar
+                  color="primary"
+                  dark
+                  style="min-height: 110px; position: relative"
+                  class="d-flex flex-column justify-center overflow-y-hidden overflow-x-auto"
+                >
+                  <div class="d-flex" v-if="title === 'Starting Items'">
+                    <v-col
                       class="d-flex flex-column align-center"
                       v-for="(item, index) in startingItems"
                       :key="index"
@@ -134,7 +130,7 @@
                         :removeItem="removeItem"
                         :index="index"
                       />
-                    </div>
+                    </v-col>
                   </div>
 
                   <div class="d-flex flex-row" v-if="title === 'Middle Items'">
@@ -283,7 +279,6 @@ export default {
 <style lang="scss" scoped>
 .container-modal {
   position: relative;
-  border: 1px solid red;
   min-height: 200px;
   width: 100%;
 }
@@ -301,6 +296,8 @@ export default {
   width: 100%;
   bottom: 0;
   left: 0;
+  min-height: 100px;
+  // flex-wrap: wrap;
 }
 
 .item {
@@ -310,5 +307,9 @@ export default {
   &:hover {
     opacity: 0.8;
   }
+}
+
+.v-toolbar__content {
+  min-height: 100% !important;
 }
 </style>

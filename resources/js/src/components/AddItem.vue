@@ -89,33 +89,75 @@
                   style="border: 1px solid blue"
                   class="text-center d-flex align-center justify-center"
                 >
-                  <div
-                    class="item"
-                    @click="
-                      addItem(
-                        item.name,
-                        item.image.full,
-                        item.description,
-                        title
-                      )
-                    "
-                  >
-                    <v-img
-                      height="50"
-                      width="50"
-                      :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
-                      class="ma-auto"
-                    />
-                    <p>{{ item.name }}</p>
-                  </div>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <div
+                        v-bind="attrs"
+                        v-on="on"
+                        class="item"
+                        @click="
+                          addItem(
+                            item.name,
+                            item.image.full,
+                            item.description,
+                            title
+                          )
+                        "
+                      >
+                        <v-img
+                          height="50"
+                          width="50"
+                          :src="`http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/${item.image.full}`"
+                          class="ma-auto"
+                        />
+                        <p>{{ item.name }}</p>
+                      </div>
+                    </template>
+                    <div class="item-info d-flex flex-column text-center">
+                      <h2>{{ item.name }}</h2>
+                      <br />
+
+                      <p>
+                        <strong
+                          >Total price: {{ item.gold.total }} | Sell price
+                          {{ item.gold.sell }}</strong
+                        >
+                      </p>
+
+                      <div v-for="(stats, name) in item.stats" :key="name">
+                        <p>
+                          {{
+                            name
+                              .split(/(?=[A-Z])/)
+                              .map((s) => s)
+                              .slice(1, 3)
+                              .join(" ")
+                          }}:
+                          {{
+                            stats - Math.floor(n) !== 0 ? stats * 100 : stats
+                          }}
+                        </p>
+                      </div>
+
+                      <p class="d-flex flex-column text-center">
+                        <strong>Description:</strong>
+                        {{ item.description.replace(/ *\<[^>]*\>*/g, "") }}
+                      </p>
+
+                      <p class="d-flex flex-column text-center">
+                        <strong>Description:</strong>
+                        {{ item.description.replace(/ *\<[^>]*\>*/g, "") }}
+                      </p>
+                    </div>
+                  </v-tooltip>
                 </v-col>
               </v-row>
 
-              <div class="toolbar-bottom" style="border: 1px solid red">
+              <div class="toolbar-bottom">
                 <v-toolbar
                   color="primary"
                   dark
-                  style="min-height: 110px; position: relative"
+                  style="min-height: 110px"
                   class="d-flex flex-column justify-center overflow-y-hidden overflow-x-auto"
                 >
                   <div class="d-flex" v-if="title === 'Starting Items'">
@@ -134,7 +176,7 @@
                   </div>
 
                   <div class="d-flex flex-row" v-if="title === 'Middle Items'">
-                    <div
+                    <v-col
                       class="d-flex flex-column align-center"
                       v-for="(item, index) in middleItems"
                       :key="index"
@@ -145,11 +187,11 @@
                         :removeItem="removeItem"
                         :index="index"
                       />
-                    </div>
+                    </v-col>
                   </div>
 
                   <div class="d-flex flex-row" v-if="title === 'Full Items'">
-                    <div
+                    <v-col
                       class="d-flex flex-column align-center"
                       v-for="(item, index) in fullItems"
                       :key="index"
@@ -160,9 +202,8 @@
                         :removeItem="removeItem"
                         :index="index"
                       />
-                    </div>
+                    </v-col>
                   </div>
-                  <!-- <v-btn @click="saveItems(title)" color="success">save</v-btn> -->
                 </v-toolbar>
               </div>
             </div>
@@ -294,10 +335,10 @@ export default {
 .toolbar-bottom {
   position: sticky;
   width: 100%;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
-  min-height: 100px;
-  // flex-wrap: wrap;
+  min-height: 110px;
+  flex-wrap: wrap;
 }
 
 .item {

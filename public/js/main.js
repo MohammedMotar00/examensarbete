@@ -2279,6 +2279,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3242,7 +3283,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".v-card--reveal {\n  align-items: center;\n  bottom: 0;\n  justify-content: center;\n  opacity: 0.7;\n  position: absolute;\n  width: 100%;\n}\n.add-icon {\n  color: blue !important;\n  cursor: pointer;\n  transition: all 1s ease-in-out;\n}\n.add-icon:hover {\n  transform: scale(1.2, 1.2);\n}", ""]);
+exports.push([module.i, ".v-card--reveal {\n  align-items: center;\n  bottom: 0;\n  justify-content: center;\n  opacity: 0.7;\n  position: absolute;\n  width: 100%;\n}\n.add-icon {\n  color: blue !important;\n  cursor: pointer;\n  transition: all 1s ease-in-out;\n}\n.add-icon:hover {\n  transform: scale(1.2, 1.2);\n}\n.item-info {\n  max-width: 700px;\n  background-color: #1a1919;\n  padding: 10px;\n}\n@media (max-width: 500px) {\n.item-info {\n    max-width: 300px;\n}\n}", ""]);
 
 // exports
 
@@ -3261,7 +3302,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".container-modal[data-v-54c01f78] {\n  position: relative;\n  min-height: 200px;\n  width: 100%;\n}\n.toolbar-top[data-v-54c01f78] {\n  position: -webkit-sticky;\n  position: sticky;\n  width: 100%;\n  top: 0;\n  left: 0;\n  z-index: 1;\n}\n.toolbar-bottom[data-v-54c01f78] {\n  position: -webkit-sticky;\n  position: sticky;\n  width: 100%;\n  bottom: 0;\n  left: 0;\n  min-height: 100px;\n}\n.item[data-v-54c01f78] {\n  cursor: pointer;\n  opacity: 1;\n}\n.item[data-v-54c01f78]:hover {\n  opacity: 0.8;\n}\n.v-toolbar__content[data-v-54c01f78] {\n  min-height: 100% !important;\n}", ""]);
+exports.push([module.i, ".container-modal[data-v-54c01f78] {\n  position: relative;\n  min-height: 200px;\n  width: 100%;\n}\n.toolbar-top[data-v-54c01f78] {\n  position: -webkit-sticky;\n  position: sticky;\n  width: 100%;\n  top: 0;\n  left: 0;\n  z-index: 1;\n}\n.toolbar-bottom[data-v-54c01f78] {\n  position: -webkit-sticky;\n  position: sticky;\n  width: 100%;\n  bottom: -1px;\n  left: 0;\n  min-height: 110px;\n  flex-wrap: wrap;\n}\n.item[data-v-54c01f78] {\n  cursor: pointer;\n  opacity: 1;\n}\n.item[data-v-54c01f78]:hover {\n  opacity: 0.8;\n}\n.v-toolbar__content[data-v-54c01f78] {\n  min-height: 100% !important;\n}", ""]);
 
 // exports
 
@@ -5743,37 +5784,169 @@ var render = function() {
                             },
                             [
                               _c(
-                                "div",
+                                "v-tooltip",
                                 {
-                                  staticClass: "item",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.addItem(
-                                        item.name,
-                                        item.image.full,
-                                        item.description,
-                                        _vm.title
-                                      )
-                                    }
-                                  }
+                                  attrs: { bottom: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          var attrs = ref.attrs
+                                          return [
+                                            _c(
+                                              "div",
+                                              _vm._g(
+                                                _vm._b(
+                                                  {
+                                                    staticClass: "item",
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.addItem(
+                                                          item.name,
+                                                          item.image.full,
+                                                          item.description,
+                                                          _vm.title
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  "div",
+                                                  attrs,
+                                                  false
+                                                ),
+                                                on
+                                              ),
+                                              [
+                                                _c("v-img", {
+                                                  staticClass: "ma-auto",
+                                                  attrs: {
+                                                    height: "50",
+                                                    width: "50",
+                                                    src:
+                                                      "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
+                                                      item.image.full
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("p", [
+                                                  _vm._v(_vm._s(item.name))
+                                                ])
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
                                 },
                                 [
-                                  _c("v-img", {
-                                    staticClass: "ma-auto",
-                                    attrs: {
-                                      height: "50",
-                                      width: "50",
-                                      src:
-                                        "http://ddragon.leagueoflegends.com/cdn/11.2.1/img/item/" +
-                                        item.image.full
-                                    }
-                                  }),
                                   _vm._v(" "),
-                                  _c("p", [_vm._v(_vm._s(item.name))])
-                                ],
-                                1
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "item-info d-flex flex-column text-center"
+                                    },
+                                    [
+                                      _c("h2", [_vm._v(_vm._s(item.name))]),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _c("strong", [
+                                          _vm._v(
+                                            "Total price: " +
+                                              _vm._s(item.gold.total) +
+                                              " | Sell price\n                        " +
+                                              _vm._s(item.gold.sell)
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(item.stats, function(stats, name) {
+                                        return _c("div", { key: name }, [
+                                          _c("p", [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(
+                                                  name
+                                                    .split(/(?=[A-Z])/)
+                                                    .map(function(s) {
+                                                      return s
+                                                    })
+                                                    .slice(1, 3)
+                                                    .join(" ")
+                                                ) +
+                                                ":\n                        " +
+                                                _vm._s(
+                                                  stats - Math.floor(_vm.n) !==
+                                                    0
+                                                    ? stats * 100
+                                                    : stats
+                                                ) +
+                                                "\n                      "
+                                            )
+                                          ])
+                                        ])
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "d-flex flex-column text-center"
+                                        },
+                                        [
+                                          _c("strong", [
+                                            _vm._v("Description:")
+                                          ]),
+                                          _vm._v(
+                                            "\n                      " +
+                                              _vm._s(
+                                                item.description.replace(
+                                                  / *\<[^>]*\>*/g,
+                                                  ""
+                                                )
+                                              ) +
+                                              "\n                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "p",
+                                        {
+                                          staticClass:
+                                            "d-flex flex-column text-center"
+                                        },
+                                        [
+                                          _c("strong", [
+                                            _vm._v("Description:")
+                                          ]),
+                                          _vm._v(
+                                            "\n                      " +
+                                              _vm._s(
+                                                item.description.replace(
+                                                  / *\<[^>]*\>*/g,
+                                                  ""
+                                                )
+                                              ) +
+                                              "\n                    "
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    2
+                                  )
+                                ]
                               )
-                            ]
+                            ],
+                            1
                           )
                         }),
                         1
@@ -5781,20 +5954,14 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        {
-                          staticClass: "toolbar-bottom",
-                          staticStyle: { border: "1px solid red" }
-                        },
+                        { staticClass: "toolbar-bottom" },
                         [
                           _c(
                             "v-toolbar",
                             {
                               staticClass:
                                 "d-flex flex-column justify-center overflow-y-hidden overflow-x-auto",
-                              staticStyle: {
-                                "min-height": "110px",
-                                position: "relative"
-                              },
+                              staticStyle: { "min-height": "110px" },
                               attrs: { color: "primary", dark: "" }
                             },
                             [
@@ -5839,7 +6006,7 @@ var render = function() {
                                       index
                                     ) {
                                       return _c(
-                                        "div",
+                                        "v-col",
                                         {
                                           key: index,
                                           staticClass:
@@ -5858,7 +6025,7 @@ var render = function() {
                                         1
                                       )
                                     }),
-                                    0
+                                    1
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
@@ -5871,7 +6038,7 @@ var render = function() {
                                       index
                                     ) {
                                       return _c(
-                                        "div",
+                                        "v-col",
                                         {
                                           key: index,
                                           staticClass:
@@ -5890,7 +6057,7 @@ var render = function() {
                                         1
                                       )
                                     }),
-                                    0
+                                    1
                                   )
                                 : _vm._e()
                             ]

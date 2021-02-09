@@ -47,4 +47,16 @@ export default {
     transform: scale(1.2, 1.2);
   }
 }
+
+.item-info {
+  max-width: 700px;
+  background-color: rgb(26, 25, 25);
+  padding: 10px;
+}
+
+@media (max-width: 500px) {
+  .item-info {
+    max-width: 300px;
+  }
+}
 </style>

@@ -99,6 +99,9 @@
                           addItem(
                             item.name,
                             item.image.full,
+                            item.gold,
+                            item.stats,
+                            item.plaintext,
                             item.description,
                             title
                           )
@@ -113,42 +116,7 @@
                         <p>{{ item.name }}</p>
                       </div>
                     </template>
-                    <div class="item-info d-flex flex-column text-center">
-                      <h2>{{ item.name }}</h2>
-                      <br />
-
-                      <p>
-                        <strong
-                          >Total price: {{ item.gold.total }} | Sell price
-                          {{ item.gold.sell }}</strong
-                        >
-                      </p>
-
-                      <div v-for="(stats, name) in item.stats" :key="name">
-                        <p>
-                          {{
-                            name
-                              .split(/(?=[A-Z])/)
-                              .map((s) => s)
-                              .slice(1, 3)
-                              .join(" ")
-                          }}:
-                          {{
-                            stats - Math.floor(n) !== 0 ? stats * 100 : stats
-                          }}
-                        </p>
-                      </div>
-
-                      <p class="d-flex flex-column text-center">
-                        <strong>Description:</strong>
-                        {{ item.description.replace(/ *\<[^>]*\>*/g, "") }}
-                      </p>
-
-                      <p class="d-flex flex-column text-center">
-                        <strong>Description:</strong>
-                        {{ item.description.replace(/ *\<[^>]*\>*/g, "") }}
-                      </p>
-                    </div>
+                    <ItemInfo :item="item" />
                   </v-tooltip>
                 </v-col>
               </v-row>
@@ -218,11 +186,12 @@
 import { mapGetters, mapActions } from "vuex";
 import Item from "./Item";
 import AddedItems from "./AddedItems";
+import ItemInfo from "./ItemInfo";
 
 export default {
   name: "AddItem",
   props: ["title", "pickedChampion"],
-  components: { Item, AddedItems },
+  components: { Item, AddedItems, ItemInfo },
 
   data() {
     return {
@@ -261,7 +230,7 @@ export default {
       this.searchForItems(event?.target?.value);
     },
 
-    addItem(name, image, description, itemTitle) {
+    addItem(name, image, gold, stats, plaintext, description, itemTitle) {
       const key = Math.floor(Math.random() * 120);
       let id = null;
 
@@ -269,37 +238,49 @@ export default {
 
       if (itemTitle === "Starting Items") {
         if (this.startingItems.length <= 5) {
-          this.startingItems.push({ name, image, description, id });
+          this.startingItems.push({
+            name,
+            image,
+            gold,
+            stats,
+            plaintext,
+            description,
+            id,
+          });
           this.saveStartingItems(this.startingItems);
         }
       }
 
       if (itemTitle === "Middle Items") {
         if (this.middleItems.length <= 5) {
-          this.middleItems.push({ name, image, description, id });
+          this.middleItems.push({
+            name,
+            image,
+            gold,
+            stats,
+            plaintext,
+            description,
+            id,
+          });
+          this.saveMiddleItems(this.middleItems);
         }
       }
 
       if (itemTitle === "Full Items") {
         if (this.fullItems.length <= 5) {
-          this.fullItems.push({ name, image, description, id });
+          this.fullItems.push({
+            name,
+            image,
+            gold,
+            stats,
+            plaintext,
+            description,
+            id,
+          });
+          this.saveFullItems(this.fullItems);
         }
       }
     },
-
-    // saveItems(title) {
-    //   if (title === "Starting Items") {
-    //     this.saveStartingItems(this.startingItems);
-    //   }
-
-    //   if (title === "Middle Items") {
-    //     this.saveMiddleItems(this.middleItems);
-    //   }
-
-    //   if (title === "Full Items") {
-    //     this.saveFullItems(this.fullItems);
-    //   }
-    // },
 
     removeItem(itemTitle, index) {
       console.log(itemTitle);

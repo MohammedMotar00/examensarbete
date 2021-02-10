@@ -13,22 +13,16 @@
 
       <v-row>
         <v-col cols="12">
-          <ShowItems
-            title="Starting Items"
-            :items="getSingleChampionItemsCollection_Starting"
-          />
+          <h2 class="ml-2">Starting Items</h2>
+          <ShowItems :items="getSingleChampionItemsCollection_Starting" />
         </v-col>
         <v-col cols="12">
-          <ShowItems
-            title="Middle Items"
-            :items="getSingleChampionItemsCollection_Middle"
-          />
+          <h2 class="ml-2">Middle Items</h2>
+          <ShowItems :items="getSingleChampionItemsCollection_Middle" />
         </v-col>
         <v-col cols="12">
-          <ShowItems
-            title="Full Items"
-            :items="getSingleChampionItemsCollection_Full"
-          />
+          <h2 class="ml-2">Full Items</h2>
+          <ShowItems :items="getSingleChampionItemsCollection_Full" />
         </v-col>
       </v-row>
     </v-card>
@@ -36,7 +30,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
 import { mapActions, mapGetters } from "vuex";
 import ShowItems from "../components/ShowItems";
 
@@ -45,7 +38,6 @@ export default {
 
   data() {
     return {
-      // item_collection_info: this.$route.params.item_collection_info[0],
       championName: this.$route.params.item_collection_title_name_id,
       queryId: this.$route.query.id,
     };

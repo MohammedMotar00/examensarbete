@@ -51,7 +51,7 @@
 
       <v-dialog
         transition="dialog-top-transition"
-        max-width="600"
+        max-width="800"
         style="position: relative"
       >
         <template v-slot:activator="{ on, attrs }">

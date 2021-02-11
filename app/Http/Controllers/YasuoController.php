@@ -16,7 +16,7 @@ class YasuoController extends Controller
     $yasuo->items = $request->items;
     $yasuo->save();
 
-    return response()->json($yasuo);
+    return response()->json('success');
   }
 
   public function index()

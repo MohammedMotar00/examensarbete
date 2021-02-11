@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid style="border: 1px solid green; max-width: 1920px">
     <v-card class="light-blue lighten-4">
       <v-row class="d-flex flex-wrap">
         <v-col class="d-flex flex-wrap">

@@ -17,7 +17,7 @@ class YoneController extends Controller
     $yone->items = $request->items;
     $yone->save();
 
-    return response()->json($yone);
+    return response()->json('success');
   }
 
   public function index()

@@ -30,11 +30,6 @@ export const searchForItems = ({ commit }, payload) => {
     commit("SET_FILTER_ITEMS", payload);
 };
 
-// export const saveAllItems = ({ commit }, items) => {
-//     // console.log(items);
-//     commit("SET_SAVE_ALL_ITEMS", items);
-// };
-
 export const saveStartingItems = ({ commit }, items) => {
     commit("SET_SAVE_STARTING_ITEMS", items);
 };
@@ -56,7 +51,7 @@ export const clearFullItems = ({ commit }) => commit("SET_CLEAR_FULL_ITEMS");
 
 // Save to DB
 // export const saveItemsToDB = ({ commit }) => commit("SAVE_ITEMS_TO_DB");
-export const saveItemsToDB = ({ getters }, collectionTitle) => {
+export const saveItemsToDB = ({ getters, commit }, collectionTitle) => {
     let items = getters.getAllItems;
     let pickedChamp = getters.getPickedChampionName.toLowerCase();
     let championImage = getters.getChampionImage;
@@ -68,9 +63,13 @@ export const saveItemsToDB = ({ getters }, collectionTitle) => {
             image: championImage
         })
         .then(res => {
-            console.log(res);
+            commit("SET_RESPONSE", res.data);
         });
 };
+
+// clear POST response
+export const clearPostResponse = ({ commit }) =>
+    commit("SET_CLEAR_POST_RESPONSE");
 
 // Fetch items fromMYSQL
 export const fetchItemCollection = ({ commit }, champion) => {

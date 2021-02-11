@@ -64,3 +64,9 @@ export const SET_CLEAR_SINGLE_CHAMPION_ITEMS_COLLECTION = state => {
     state.singleChampionItemsCollection = [];
     state.championItemPageImage = "";
 };
+
+// Set $Swal
+export const SET_RESPONSE = (state, response) => (state.response = response);
+
+// clear post response
+export const SET_CLEAR_POST_RESPONSE = state => (state.response = "");

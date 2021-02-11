@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header />
-    <v-main class="mx-4 mb-4">
+    <v-main class="mb-4 mx-auto" style="width: 100%">
       <router-view />
     </v-main>
   </v-app>

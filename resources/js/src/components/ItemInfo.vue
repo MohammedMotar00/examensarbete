@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column text-center">
+  <div class="d-flex flex-column text-center black" style="max-width: 600px">
     <h2>{{ item.name }}</h2>
     <br />
 

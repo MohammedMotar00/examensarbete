@@ -7,7 +7,7 @@
           @click="removeItem(title, index)"
           v-bind="attrs"
           v-on="on"
-          style="border: 1px solid blue; min-width: 120px"
+          style="min-width: 120px"
         >
           <v-img
             height="50"

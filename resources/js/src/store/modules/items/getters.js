@@ -43,3 +43,6 @@ export const getSingleChampionItemsCollection_Full = state =>
 
 export const getSingleChampionImageCollection = state =>
     state.championItemPageImage;
+
+// Get response
+export const getResponse = state => state.response;

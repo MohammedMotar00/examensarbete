@@ -15,5 +15,8 @@ export default {
     yoneItemsCollection: [],
 
     // get single items collection for champion
-    singleChampionItemsCollection: []
+    singleChampionItemsCollection: [],
+
+    // swal
+    response: ""
 };

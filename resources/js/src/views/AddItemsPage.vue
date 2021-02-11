@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="mx-auto" style="max-width: 1920px">
     <v-card class="light-blue lighten-4">
       <v-row class="justify-center flex-wrap justify-space-around">
         <v-col
@@ -44,16 +44,20 @@
           <AddItem title="Full Items" :pickedChampion="pickedChampionName" />
         </v-col>
       </v-row>
-      <v-btn @click="saveItems" color="success">Save items</v-btn>
+      <v-btn
+        :disabled="!hasWrittenTitleForItems(titleForItemCollection)"
+        @click="saveItems"
+        color="success"
+        >Save items</v-btn
+      >
     </v-card>
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import ChampionForItems from "../components/ChampionForItems";
 import AddItem from "../components/AddItem";
-// import AddItems from "../components/AddItems";
 
 export default {
   name: "AddItems",
@@ -68,6 +72,7 @@ export default {
   computed: {
     ...mapState("champions", ["champions"]),
     ...mapState("items", ["pickedChampionName"]),
+    ...mapGetters("items", ["getResponse"]),
   },
 
   methods: {
@@ -76,6 +81,7 @@ export default {
       "clearStartingItems",
       "clearMiddleItems",
       "clearFullItems",
+      "clearPostResponse",
     ]),
 
     saveItems() {
@@ -84,6 +90,13 @@ export default {
       } else {
         return null;
       }
+    },
+
+    hasWrittenTitleForItems() {
+      return (
+        this.titleForItemCollection !== "" &&
+        this.titleForItemCollection !== null
+      );
     },
 
     clearItems() {
@@ -95,6 +108,33 @@ export default {
 
   mounted() {
     this.clearItems();
+
+    this.unwatch = this.$watch("getResponse", (newVal, oldVal) => {
+      if (newVal === "success") {
+        this.$swal({
+          icon: "success",
+          title: "Well done!",
+          text: "Your items have been added successfully",
+          confirmButtonText: "Continue",
+        }).then(() => {
+          this.clearPostResponse();
+          this.$router.push("/");
+        });
+      } else {
+        this.$swal({
+          icon: "error",
+          title: "Oops!",
+          text: "Could not add your items, please try again later",
+          type: "warning",
+          confirmButtonText: "Try again",
+          showCloseButton: true,
+        });
+      }
+    });
+  },
+
+  beforeDestroy() {
+    this.unwatch();
   },
 };
 </script>

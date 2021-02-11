@@ -18,7 +18,7 @@ class ShenController extends Controller
     // $shen->items = $request->items['starting'];
     $shen->save();
 
-    return response()->json($shen);
+    return response()->json('success');
   }
 
   public function index()
